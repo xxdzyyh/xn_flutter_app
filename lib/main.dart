@@ -3,10 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'dart:io';
 import 'package:xn_flutter_app/views/finance.dart';
 import 'package:xn_flutter_app/views/my.dart';
-import 'package:xn_flutter_app/views/home.dart';
+import 'package:xn_flutter_app/views/home_page/home.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter/services.dart';
 
 Map<int, Color> color = {};
 
@@ -18,6 +17,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
+      theme: CupertinoThemeData(
+        scaffoldBackgroundColor: Color(0xFFF8F8F8),
+        textTheme: CupertinoTextThemeData(
+          navTitleTextStyle: TextStyle(
+            color: xn_black_normal,
+            fontSize: 16,
+            fontWeight: FontWeight.bold
+          )
+        )
+      ),
       home: MyHomePage(title: '小牛在线'),
     );
   }
@@ -42,7 +51,6 @@ class _MyHomePageState extends State<MyHomePage>
   ];
   List<Widget> xnTabs = [];
   List<BottomNavigationBarItem> xnTabItems = [];
-
 
   @override
   void initState() {
@@ -87,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage>
     //页面、字体适配
     ScreenUtil.instance = ScreenUtil(width: 320, height: 568)..init(context);
     ScreenUtil.instance = ScreenUtil(width: 320, height: 568, allowFontScaling: false)..init(context);
-  
+
     var cupertino = CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         items: xnTabItems,
@@ -101,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage>
         },
       ),
       tabBuilder: (context, index) {
-        return CupertinoTabView(
+        return CupertinoTabView(  
           builder: (context) {
             switch (index) {
               case 0:
@@ -117,31 +125,8 @@ class _MyHomePageState extends State<MyHomePage>
           },
         );
       }
-
     );
-    return cupertino;
 
-    // var scaffold = Scaffold(
-    //   appBar: AppBar(
-    //     // Here we take the value from the MyHomePage object that was created by
-    //     // the App.build method, and use it to set our appbar title.
-    //     title: Text(widget.title),
-    //   ),
-    //   body: TabBarView(
-    //     controller: controller,
-    //     children: <Widget>[HomePage(), FinancePage(), MyPage()],
-    //   ),
-    //   bottomNavigationBar: Material(
-    //     color: Colors.white,
-    //     child: TabBar(
-    //         controller: controller,
-    //         indicatorColor: Theme.of(context).primaryColor,
-    //         indicatorWeight: 3.0,
-    //         labelColor: Theme.of(context).primaryColor,
-    //         unselectedLabelColor: const Color(0xFF8E8E8E),
-    //         tabs: xnTabs),
-    //   ),
-    // );
-    // return scaffold;
-  }
+    return cupertino;
+    }
 }

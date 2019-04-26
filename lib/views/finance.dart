@@ -14,10 +14,6 @@ class _FinancePageState extends State<FinancePage> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text("项目",
-          style: TextStyle(
-            color: xn_black_normal,
-            fontSize: ScreenUtil.getInstance().setSp(14),
-          ),
         )
       ),
       child: Center(
