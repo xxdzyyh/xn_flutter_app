@@ -5,6 +5,10 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:xn_flutter_app/network/xn_http_client.dart';
 import 'dart:async';
 import 'package:xn_flutter_app/views/home_page/banner_entity.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:xn_flutter_app/views/home_page/home_banner.dart';
+import 'package:xn_flutter_app/views/home_page/home_entries.dart';
+
 
 GlobalKey<RefreshHeaderState> _headerKey = new GlobalKey<RefreshHeaderState>();
 GlobalKey<EasyRefreshState> _easyRefreshKey = new GlobalKey<EasyRefreshState>();
@@ -17,7 +21,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    _requestHome();
     super.initState();
   }
 
@@ -40,41 +43,90 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
+  HomePageEntity _homePageEntity;
+
   @override
   void initState() {
     super.initState();
+    _requestHome();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return _getRefresh(context);
+    return _getContent();
   }
+
+  Widget _getContent() {
+    if (_homePageEntity == null) {
+      return _showLoading();
+    } else {
+      return _getRefresh(context);
+    }
+  }
+
+  Future<HomePageEntity> _requestHome() async {
+    try {
+      var response = await XNHttpClient.post("home.json", null);
+      HomePageEntity homePageEntity = HomePageEntity.fromJson(response["data"]);
+
+      setState(() {
+        _homePageEntity = homePageEntity;
+      });
+
+      return homePageEntity;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Widget _getRefresh(BuildContext context) {
+    return EasyRefresh(
+      key: _easyRefreshKey,
+      behavior: ScrollOverBehavior(),
+      child: _getListView(),
+      refreshHeader: _getRefreshHeader(),
+      onRefresh: () async {
+        _requestHome();
+      },
+    );
+  }
+
+  Widget _getListView() {
+    List<Widget> list = List();
+    if(_homePageEntity.extData.adImages != null) {
+      list.add(HomeBanner(homeEntity: _homePageEntity,));
+    }
+    if(_homePageEntity.entries !=null) {
+      list.add(HomeEntriesPage(homeEntity: _homePageEntity,));
+    }
+
+
+    return ListView(
+      children: list,
+    );
+  }
+
+
 }
 
-Widget _getRefresh(BuildContext context) {
-  return EasyRefresh(
-    key: _easyRefreshKey,
-    behavior: ScrollOverBehavior(),
-    child: _getListView(),
-    refreshHeader: _getRefreshHeader(),
-    onRefresh: () async {
-      await new Future.delayed(const Duration(seconds: 3), () {});
-    },
-  );
-}
-
-Widget _getListView() {
-  return ListView.builder(
-    itemCount: 20,
-    itemBuilder: (context, index) {
-      return ListTile(
-        title: Text("哈哈"),
-        onTap: () {
-          print("点击一条 $index");
-        },
-      );
-    },
-  );
+Widget _showLoading() {
+  return Center(
+      child: Container(
+    width: 50.0,
+    height: 50.0,
+    child: SpinKitRing(
+      color: Colors.orange,
+      size: 30,
+      lineWidth: 3,
+    ),
+  ));
 }
 
 Widget _getNavigationBar() {
@@ -113,32 +165,4 @@ Widget _getRefreshHeader() {
     textColor: Colors.black,
     isFloat: false,
   );
-}
-
-void _requestHome() async {
-  var entries = [];
-  var banners = [];
-  var categories = [];
-  var newsBanners = [];
-
-  try {
-    var response = await XNHttpClient.post("home.json", null);
-    entries = response["data"]["entries"];
-    banners = response["data"]["banners"];
-    categories = response["data"]["categories"];
-    newsBanners = response["data"]["newsBanners"];
-    print(response);
-    HomePageEntity homePageEntity = HomePageEntity.fromJson(response["data"]);
-    print(homePageEntity);
-  } catch (e) {
-    print(e);
-  }
-
-
-  for (int i=0; i<banners.length; i++) {
-    BannerEntity banner = BannerEntity.fromJson(banners[i]);
-    print(banner);
-  }
-
-
 }
