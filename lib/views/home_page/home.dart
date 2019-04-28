@@ -106,6 +106,9 @@ class _HomeBodyState extends State<HomeBody> {
     if(_homePageEntity.entries !=null) {
       list.add(HomeEntriesPage(homeEntity: _homePageEntity,));
     }
+    if(_homePageEntity.banners != null) {
+      list.add(HomeBannerPage(homeEntity: _homePageEntity,));
+    }
 
 
     return ListView(
