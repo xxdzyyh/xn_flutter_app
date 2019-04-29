@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xn_flutter_app/views/home_page/banner_entity.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
+import 'package:xn_flutter_app/uibuild/xnscale.dart';
 import 'package:xn_flutter_app/uibuild/xnscale.dart';
 
 class HomeEntriesPage extends StatefulWidget {
@@ -24,7 +24,7 @@ class _HomeEntriesPageState extends State<HomeEntriesPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil.getInstance().setHeight(91),
+      height: XNScale.height(90),
       color: Colors.white,
       child: Row(
         children: _getItems(),
@@ -58,12 +58,14 @@ class _State extends State<HomeEntryItem> {
             print("点击了入口 ${widget.entity.title}");
           },
           child: Padding(
-            padding: EdgeInsets.fromLTRB(0, ScreenUtil().setHeight(7), 0, 0),
+            padding: EdgeInsets.fromLTRB(0, XNScale.height(13), 0, 0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Image.network(
                   widget.entity.img,
+                  width: XNScale.width(44),
+                  height: XNScale.height(44),
                 ),
                 Text(
                   widget.entity.title,
@@ -104,10 +106,10 @@ class _HomeBannerPageState extends State<HomeBannerPage> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      height: ScreenUtil().setHeight(90),
+      height: XNScale.height(90),
       child: Padding(
-        padding: EdgeInsets.fromLTRB(XNScale.width(15), 0,
-            ScreenUtil().setWidth(15), ScreenUtil().setHeight(20)),
+        padding: EdgeInsets.fromLTRB(XNScale.width(15), XNScale.height(2),
+            XNScale.width(15), XNScale.height(20)),
         child: DecoratedBox(
           decoration: BoxDecoration(
               color: Colors.white,

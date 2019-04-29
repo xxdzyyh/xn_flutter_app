@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FinancePage extends StatefulWidget {
   @override

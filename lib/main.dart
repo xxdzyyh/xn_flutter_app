@@ -5,7 +5,7 @@ import 'package:xn_flutter_app/views/finance.dart';
 import 'package:xn_flutter_app/views/my.dart';
 import 'package:xn_flutter_app/views/home_page/home.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'uibuild/xnscale.dart';
 
 Map<int, Color> color = {};
 
@@ -21,9 +21,9 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color(0xFFF8F8F8),
         textTheme: CupertinoTextThemeData(
           navTitleTextStyle: TextStyle(
-            color: xn_black_normal,
-            fontSize: 16,
-            fontWeight: FontWeight.bold
+            color: Color(0xFF333333),
+            fontSize: 19,
+            fontWeight: FontWeight.normal
           )
         )
       ),
@@ -93,8 +93,7 @@ class _MyHomePageState extends State<MyHomePage>
   Widget build(BuildContext context) {
 
     //页面、字体适配
-    ScreenUtil.instance = ScreenUtil(width: 320, height: 568)..init(context);
-    ScreenUtil.instance = ScreenUtil(width: 320, height: 568, allowFontScaling: false)..init(context);
+    XNScale.config(context, 320, 568);
 
     var cupertino = CupertinoTabScaffold(
       tabBar: CupertinoTabBar(

@@ -9,7 +9,7 @@ BaseOptions options = new BaseOptions(
   receiveTimeout: 4000,
   headers: {
     //需要获取当前版本
-    HttpHeaders.userAgentHeader: "XiaoNiu-App-IOS-5.1.1",
+    HttpHeaders.userAgentHeader: "XiaoNiu-App-IOS-5.1.2",
     HttpHeaders.acceptCharsetHeader: "UTF-8",
     HttpHeaders.contentTypeHeader: "application/json",
     HttpHeaders.acceptEncodingHeader: "gzip",
@@ -29,10 +29,10 @@ class XNHttpClient {
   static Future post(String url, Map<String, dynamic> params) async {
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (client) {
-      // client.findProxy = (uri) {
-      //   //修改这个才能抓包 本机地址：端口
-      //   return "PROXY 172.20.17.11:443";
-      // };
+      client.findProxy = (uri) {
+        //修改这个才能抓包 本机地址：端口
+        return "PROXY 172.20.17.11:443";
+      };
       client.badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
     };

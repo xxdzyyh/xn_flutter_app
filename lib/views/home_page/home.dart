@@ -8,7 +8,10 @@ import 'package:xn_flutter_app/views/home_page/banner_entity.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:xn_flutter_app/views/home_page/home_banner.dart';
 import 'package:xn_flutter_app/views/home_page/home_entries.dart';
-
+import 'package:xn_flutter_app/component/empty_view.dart';
+import 'package:xn_flutter_app/views/home_page/home_title.dart';
+import 'package:xn_flutter_app/views/home_page/home_product_widget.dart';
+import 'package:xn_flutter_app/views/home_page/home_news_widget.dart';
 
 GlobalKey<RefreshHeaderState> _headerKey = new GlobalKey<RefreshHeaderState>();
 GlobalKey<EasyRefreshState> _easyRefreshKey = new GlobalKey<EasyRefreshState>();
@@ -32,6 +35,37 @@ class _HomePageState extends State<HomePage> {
         child: SafeArea(
           child: HomeBody(),
         ),
+      ),
+    );
+  }
+
+  Widget _getNavigationBar() {
+    return CupertinoNavigationBar(
+      middle: Image.asset(
+        "assets/images/home_nav_logo.png",
+        width: 65,
+        height: 14,
+      ),
+      trailing: CupertinoButton(
+        padding: EdgeInsets.all(0),
+        pressedOpacity: 0.9,
+        child: SizedBox(
+          child: Image.asset(
+            "assets/images/home_message_icon.png",
+            width: 20,
+            height: 15,
+          ),
+        ),
+        onPressed: () {
+          print("点了");
+          Navigator.of(context, rootNavigator: true).push(
+			CupertinoPageRoute(
+				builder: (BuildContext context) {
+					return EmptyPage();
+				}
+			)
+		  );
+        },
       ),
     );
   }
@@ -100,23 +134,36 @@ class _HomeBodyState extends State<HomeBody> {
 
   Widget _getListView() {
     List<Widget> list = List();
-    if(_homePageEntity.extData.adImages != null) {
-      list.add(HomeBanner(homeEntity: _homePageEntity,));
+    if (_homePageEntity.extData.adImages != null) {
+      list.add(HomeBanner(
+        homeEntity: _homePageEntity,
+      ));
     }
-    if(_homePageEntity.entries !=null) {
-      list.add(HomeEntriesPage(homeEntity: _homePageEntity,));
+    if (_homePageEntity.entries != null) {
+      list.add(HomeEntriesPage(
+        homeEntity: _homePageEntity,
+      ));
     }
-    if(_homePageEntity.banners != null) {
-      list.add(HomeBannerPage(homeEntity: _homePageEntity,));
+    if (_homePageEntity.banners != null) {
+      list.add(HomeBannerPage(
+        homeEntity: _homePageEntity,
+      ));
     }
 
+	if(_homePageEntity.categories != null) {
+		list.add(HomeTitle(title: "为您推荐",));
+		list.add(HomeProductWidget(homeEntity: _homePageEntity,));
+	}
+
+	if(_homePageEntity.newsBanners != null) {
+		list.add(HomeTitle(title: "走进小牛",));
+		list.add(HomeNewsWidget(homeEntity: _homePageEntity,));
+	}
 
     return ListView(
       children: list,
     );
   }
-
-
 }
 
 Widget _showLoading() {
@@ -130,30 +177,6 @@ Widget _showLoading() {
       lineWidth: 3,
     ),
   ));
-}
-
-Widget _getNavigationBar() {
-  return CupertinoNavigationBar(
-    middle: Image.asset(
-      "assets/images/home_nav_logo.png",
-      width: 65,
-      height: 14,
-    ),
-    trailing: CupertinoButton(
-      padding: EdgeInsets.all(0),
-      pressedOpacity: 0.9,
-      child: SizedBox(
-        child: Image.asset(
-          "assets/images/home_message_icon.png",
-          width: 20,
-          height: 15,
-        ),
-      ),
-      onPressed: () {
-        print("点了");
-      },
-    ),
-  );
 }
 
 Widget _getRefreshHeader() {
