@@ -14,6 +14,7 @@ import 'package:xn_flutter_app/views/home_page/home_product_widget.dart';
 import 'package:xn_flutter_app/views/home_page/home_news_widget.dart';
 import 'package:xn_flutter_app/views/home_page/home_aboutus_widget.dart';
 import 'package:xn_flutter_app/views/home_page/home_statistics_widget.dart';
+import 'package:xn_flutter_app/views/home_page/xn_bottomalert_widget.dart';
 
 
 GlobalKey<RefreshHeaderState> _headerKey = new GlobalKey<RefreshHeaderState>();
@@ -168,6 +169,7 @@ class _HomeBodyState extends State<HomeBody> {
 	if (_homePageEntity.statistics != null) {
 		list.add(HomeStatisticsWidget(homeEntity: _homePageEntity,));
 	}
+	list.add(XNBottomAlertWidget());
 
     return ListView(
       children: list,

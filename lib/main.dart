@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoApp(
       theme: CupertinoThemeData(
-        scaffoldBackgroundColor: Color(0xFFF8F8F8),
+        scaffoldBackgroundColor: xn_bg_color,
         textTheme: CupertinoTextThemeData(
           navTitleTextStyle: TextStyle(
             color: Color(0xFF333333),
