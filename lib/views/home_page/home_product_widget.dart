@@ -21,3 +21,17 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
     );
   }
 }
+
+class HomeProductItemWidget extends StatefulWidget {
+  @override
+  _HomeProductItemWidgetState createState() => _HomeProductItemWidgetState();
+}
+
+class _HomeProductItemWidgetState extends State<HomeProductItemWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      
+    );
+  }
+}

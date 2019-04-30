@@ -12,6 +12,9 @@ import 'package:xn_flutter_app/component/empty_view.dart';
 import 'package:xn_flutter_app/views/home_page/home_title.dart';
 import 'package:xn_flutter_app/views/home_page/home_product_widget.dart';
 import 'package:xn_flutter_app/views/home_page/home_news_widget.dart';
+import 'package:xn_flutter_app/views/home_page/home_aboutus_widget.dart';
+import 'package:xn_flutter_app/views/home_page/home_statistics_widget.dart';
+
 
 GlobalKey<RefreshHeaderState> _headerKey = new GlobalKey<RefreshHeaderState>();
 GlobalKey<EasyRefreshState> _easyRefreshKey = new GlobalKey<EasyRefreshState>();
@@ -158,6 +161,12 @@ class _HomeBodyState extends State<HomeBody> {
 	if(_homePageEntity.newsBanners != null) {
 		list.add(HomeTitle(title: "走进小牛",));
 		list.add(HomeNewsWidget(homeEntity: _homePageEntity,));
+	}
+	if(_homePageEntity.aboutUs != null) {
+		list.add(HomeAboutUsWidget(homeEntity: _homePageEntity,));
+	}
+	if (_homePageEntity.statistics != null) {
+		list.add(HomeStatisticsWidget(homeEntity: _homePageEntity,));
 	}
 
     return ListView(
