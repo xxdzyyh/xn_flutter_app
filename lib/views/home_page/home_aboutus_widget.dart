@@ -109,6 +109,7 @@ class _HomeAboutUsItemWidgetState extends State<HomeAboutUsItemWidget> {
                   fontSize: XNScale.fontSize(14),
                   color: xn_black_normal,
                 ),
+                
               )
             ],
           ),
