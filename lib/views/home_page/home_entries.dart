@@ -116,7 +116,7 @@ class _HomeBannerPageState extends State<HomeBannerPage> {
               borderRadius: BorderRadius.circular(5.0),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.grey,
+                    color: Colors.grey[300],
                     offset: Offset(1.0, 1.0),
                     blurRadius: 5.0)
               ]),

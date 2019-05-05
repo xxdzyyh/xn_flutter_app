@@ -64,7 +64,7 @@ class _HomeNewsItemWidgetState extends State<HomeNewsItemWidget> {
       child: DecoratedBox(
         decoration: BoxDecoration(color: Colors.white, boxShadow: [
           BoxShadow(
-              color: Colors.grey, offset: Offset(1.0, 1.0), blurRadius: 5.0)
+              color: Colors.grey[300], offset: Offset(1.0, 1.0), blurRadius: 5.0)
         ]),
         child: Column(
           children: <Widget>[

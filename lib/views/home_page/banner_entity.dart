@@ -77,13 +77,14 @@ class CategoryEntity {
   @JsonKey(name: "ID")
   final String id;
   final int dataType;
-  final bool isNewProduct;
+  final bool newProduct;
   final String betweenAnnualRateText;
   final String termAndTransferDesc;
   final int status;
   final String statusText;
   final String type;
   final String typeText;
+  @JsonKey(name: "description")
   final String desc;
   final String transDescription;
   final String annualRateText;
@@ -98,7 +99,7 @@ class CategoryEntity {
   final String termUnitText;
   final String url;
 
-  CategoryEntity({this.id, this.dataType,this.isNewProduct, this.betweenAnnualRateText,
+  CategoryEntity({this.id, this.dataType,this.newProduct, this.betweenAnnualRateText,
   this.termAndTransferDesc,this.status, this.statusText, this.type, this.typeText,
   this.desc, this.transDescription, this.annualRateText, this.minAnnualRate, 
   this.maxAnnualRate, this.annualRatePrefix, this.annualRateSuffix, this.addRate, this.termText,

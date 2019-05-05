@@ -80,6 +80,7 @@ class _HomeAboutUsItemWidgetState extends State<HomeAboutUsItemWidget> {
   Widget build(BuildContext context) {
     return Container(
       height: XNScale.height(116),
+      color: Colors.white,
       child: Row(
         children: _getRowWidget(),
       ),
