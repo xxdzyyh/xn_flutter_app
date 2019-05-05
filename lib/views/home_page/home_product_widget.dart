@@ -42,10 +42,12 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
 
     if (_list.length >= 3) {
       Expanded row = Expanded(
+
         child: Padding(
           padding:
               EdgeInsets.fromLTRB(XNScale.width(10), 0, XNScale.width(10), 0),
           child: Flex(
+            crossAxisAlignment: CrossAxisAlignment.start,
             direction: Axis.horizontal,
             children: <Widget>[
               HomeProductItemMoreWidget(
@@ -165,6 +167,7 @@ class _HomeProductItemWidgetState extends State<HomeProductItemWidget> {
               style: TextStyle(
                 fontSize: XNScale.fontSize(18),
                 color: xn_orange_2,
+                fontWeight: FontWeight.bold,
               ),
             ),
             TextSpan(
@@ -296,6 +299,7 @@ class _HomeProductItemMoreWidgetState extends State<HomeProductItemMoreWidget> {
               style: TextStyle(
                 fontSize: XNScale.fontSize(14),
                 color: xn_orange_2,
+                fontWeight: FontWeight.bold,
               ),
             ),
             TextSpan(
@@ -317,6 +321,7 @@ class _HomeProductItemMoreWidgetState extends State<HomeProductItemMoreWidget> {
               style: TextStyle(
                 fontSize: XNScale.fontSize(14),
                 color: xn_orange_2,
+                fontWeight: FontWeight.bold,
               ),
             ),
             TextSpan(
@@ -332,6 +337,7 @@ class _HomeProductItemMoreWidgetState extends State<HomeProductItemMoreWidget> {
               style: TextStyle(
                 fontSize: XNScale.fontSize(14),
                 color: xn_orange_2,
+                fontWeight: FontWeight.bold,
               ),
             ),
             TextSpan(

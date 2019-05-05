@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 
 Size size_35 = Size(320.0, 480.0);
 Size size_40 = Size(320.0, 568.0);
@@ -44,7 +43,7 @@ class ScaleConfig {
 	double _screenWidth;
 	double _screenHeight;
 
-  ScaleConfig({this.designWidth = 320, this.designHeight = 568});
+  ScaleConfig({this.designWidth = 320.0, this.designHeight = 568.0});
 
   void init(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
@@ -66,8 +65,9 @@ class ScaleConfig {
 		if((sizeCurrent == size_61) || (sizeCurrent == size_65)) {
 			height = size_55.height;
 		}
-		return _screenHeight / height;
+		return height / designHeight;
 	}
+
 
 	double get minScale => scaleWidth > getScaleHeight() ? getScaleHeight() : scaleWidth;
 
