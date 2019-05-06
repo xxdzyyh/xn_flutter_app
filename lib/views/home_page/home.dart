@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:xn_flutter_app/network/xn_http_client.dart';
+import 'package:xn_flutter_app/uibuild/xnscale.dart';
 import 'dart:async';
 import 'package:xn_flutter_app/views/home_page/banner_entity.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -15,7 +16,7 @@ import 'package:xn_flutter_app/views/home_page/home_news_widget.dart';
 import 'package:xn_flutter_app/views/home_page/home_aboutus_widget.dart';
 import 'package:xn_flutter_app/views/home_page/home_statistics_widget.dart';
 import 'package:xn_flutter_app/views/home_page/xn_bottomalert_widget.dart';
-
+import 'package:xn_flutter_app/views/home_page/floatWidget.dart';
 
 GlobalKey<RefreshHeaderState> _headerKey = new GlobalKey<RefreshHeaderState>();
 GlobalKey<EasyRefreshState> _easyRefreshKey = new GlobalKey<EasyRefreshState>();
@@ -33,9 +34,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    CupertinoNavigationBar naviBar = _getNavigationBar();
+    print(naviBar.preferredSize.height);
     return CupertinoPageScaffold(
-      navigationBar: _getNavigationBar(),
+      navigationBar:naviBar,
       child: Material(
+        color: Colors.white,
         child: SafeArea(
           child: HomeBody(),
         ),
@@ -43,7 +47,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _getNavigationBar() {
+  CupertinoNavigationBar _getNavigationBar() {
     return CupertinoNavigationBar(
       middle: Image.asset(
         "assets/images/home_nav_logo.png",
@@ -97,7 +101,26 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   Widget build(BuildContext context) {
-    return _getContent();
+    return Stack(
+      children: _getStack(),
+    );
+
+  }
+
+  List<Widget> _getStack() {
+    List<Widget> list = List();
+    list.add( _getContent());
+
+    if(_homePageEntity != null &&  _homePageEntity.extData.toolskid != null) {
+      list.add(
+        FloatWidget(
+          originOffset: Offset(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
+          imgUrl: _homePageEntity.extData.toolskid.icon,
+          clickUrl: _homePageEntity.extData.toolskid.url,
+          )
+      );
+    }
+    return list;
   }
 
   Widget _getContent() {

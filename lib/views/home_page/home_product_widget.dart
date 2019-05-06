@@ -163,7 +163,7 @@ class _HomeProductItemWidgetState extends State<HomeProductItemWidget> {
         TextSpan(
           children: [
             TextSpan(
-              text: "${entity.minAnnualRate}",
+              text: "${entity.minAnnualRate.toDouble().toStringAsFixed(2)}",
               style: TextStyle(
                 fontSize: XNScale.fontSize(18),
                 color: xn_orange_2,
@@ -295,7 +295,7 @@ class _HomeProductItemMoreWidgetState extends State<HomeProductItemMoreWidget> {
         TextSpan(
           children: [
             TextSpan(
-              text: "${entity.minAnnualRate}",
+              text: "${entity.minAnnualRate.toDouble().toStringAsFixed(2)}",
               style: TextStyle(
                 fontSize: XNScale.fontSize(14),
                 color: xn_orange_2,
@@ -317,7 +317,7 @@ class _HomeProductItemMoreWidgetState extends State<HomeProductItemMoreWidget> {
         TextSpan(
           children: [
             TextSpan(
-              text: "${entity.minAnnualRate}",
+              text: "${entity.minAnnualRate.toDouble().toStringAsFixed(2)}",
               style: TextStyle(
                 fontSize: XNScale.fontSize(14),
                 color: xn_orange_2,
@@ -333,7 +333,7 @@ class _HomeProductItemMoreWidgetState extends State<HomeProductItemMoreWidget> {
             ),
             _getMid(entity),
             TextSpan(
-              text: "${entity.maxAnnualRate}",
+              text: "${entity.maxAnnualRate.toDouble().toStringAsFixed(2)}",
               style: TextStyle(
                 fontSize: XNScale.fontSize(14),
                 color: xn_orange_2,
