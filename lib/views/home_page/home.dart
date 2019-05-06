@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:xn_flutter_app/network/xn_http_client.dart';
-import 'package:xn_flutter_app/uibuild/xnscale.dart';
 import 'dart:async';
 import 'package:xn_flutter_app/views/home_page/banner_entity.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -17,6 +16,7 @@ import 'package:xn_flutter_app/views/home_page/home_aboutus_widget.dart';
 import 'package:xn_flutter_app/views/home_page/home_statistics_widget.dart';
 import 'package:xn_flutter_app/views/home_page/xn_bottomalert_widget.dart';
 import 'package:xn_flutter_app/views/home_page/floatWidget.dart';
+import 'package:xn_flutter_app/component/error_view.dart';
 
 GlobalKey<RefreshHeaderState> _headerKey = new GlobalKey<RefreshHeaderState>();
 GlobalKey<EasyRefreshState> _easyRefreshKey = new GlobalKey<EasyRefreshState>();
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     CupertinoNavigationBar naviBar = _getNavigationBar();
     print(naviBar.preferredSize.height);
     return CupertinoPageScaffold(
-      navigationBar:naviBar,
+      navigationBar: naviBar,
       child: Material(
         color: Colors.white,
         child: SafeArea(
@@ -66,13 +66,10 @@ class _HomePageState extends State<HomePage> {
         ),
         onPressed: () {
           print("点了");
-          Navigator.of(context, rootNavigator: true).push(
-			CupertinoPageRoute(
-				builder: (BuildContext context) {
-					return EmptyPage();
-				}
-			)
-		  );
+          Navigator.of(context, rootNavigator: true)
+              .push(CupertinoPageRoute(builder: (BuildContext context) {
+            return EmptyPage();
+          }));
         },
       ),
     );
@@ -86,10 +83,11 @@ class HomeBody extends StatefulWidget {
 
 class _HomeBodyState extends State<HomeBody> {
   HomePageEntity _homePageEntity;
-
+  bool _hasError;
   @override
   void initState() {
     super.initState();
+    _hasError = false;
     _requestHome();
   }
 
@@ -101,24 +99,34 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: _getStack(),
-    );
-
+    if (_hasError == true) {
+      return XNErrorView(
+        callBack: () {
+          setState(() {
+            _hasError = false;
+          });
+          _getContent();
+          _requestHome();
+        },
+      );
+    } else {
+      return Stack(
+        children: _getStack(),
+      );
+    }
   }
 
   List<Widget> _getStack() {
     List<Widget> list = List();
-    list.add( _getContent());
+    list.add(_getContent());
 
-    if(_homePageEntity != null &&  _homePageEntity.extData.toolskid != null) {
-      list.add(
-        FloatWidget(
-          originOffset: Offset(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
-          imgUrl: _homePageEntity.extData.toolskid.icon,
-          clickUrl: _homePageEntity.extData.toolskid.url,
-          )
-      );
+    if (_homePageEntity != null && _homePageEntity.extData.toolskid != null) {
+      list.add(FloatWidget(
+        originOffset: Offset(MediaQuery.of(context).size.width,
+            MediaQuery.of(context).size.height),
+        imgUrl: _homePageEntity.extData.toolskid.icon,
+        clickUrl: _homePageEntity.extData.toolskid.url,
+      ));
     }
     return list;
   }
@@ -142,6 +150,10 @@ class _HomeBodyState extends State<HomeBody> {
 
       return homePageEntity;
     } catch (e) {
+      setState(() {
+        _hasError = true;
+      });
+
       print(e);
       return null;
     }
@@ -177,22 +189,34 @@ class _HomeBodyState extends State<HomeBody> {
       ));
     }
 
-	if(_homePageEntity.categories != null) {
-		list.add(HomeTitle(title: "为您推荐",));
-		list.add(HomeProductWidget(homeEntity: _homePageEntity,));
-	}
+    if (_homePageEntity.categories != null) {
+      list.add(HomeTitle(
+        title: "为您推荐",
+      ));
+      list.add(HomeProductWidget(
+        homeEntity: _homePageEntity,
+      ));
+    }
 
-	if(_homePageEntity.newsBanners != null) {
-		list.add(HomeTitle(title: "走进小牛",));
-		list.add(HomeNewsWidget(homeEntity: _homePageEntity,));
-	}
-	if(_homePageEntity.aboutUs != null) {
-		list.add(HomeAboutUsWidget(homeEntity: _homePageEntity,));
-	}
-	if (_homePageEntity.statistics != null) {
-		list.add(HomeStatisticsWidget(homeEntity: _homePageEntity,));
-	}
-	list.add(XNBottomAlertWidget());
+    if (_homePageEntity.newsBanners != null) {
+      list.add(HomeTitle(
+        title: "走进小牛",
+      ));
+      list.add(HomeNewsWidget(
+        homeEntity: _homePageEntity,
+      ));
+    }
+    if (_homePageEntity.aboutUs != null) {
+      list.add(HomeAboutUsWidget(
+        homeEntity: _homePageEntity,
+      ));
+    }
+    if (_homePageEntity.statistics != null) {
+      list.add(HomeStatisticsWidget(
+        homeEntity: _homePageEntity,
+      ));
+    }
+    list.add(XNBottomAlertWidget());
 
     return ListView(
       children: list,
