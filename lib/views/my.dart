@@ -10,7 +10,7 @@ class MyPage extends StatefulWidget {
 
 class _MyPageState extends State<MyPage> {
 
-  var accountVM = XNAccoutVM()
+  var accountVM = XNAccoutVM();
 
   @override
   Widget build(BuildContext context) {
