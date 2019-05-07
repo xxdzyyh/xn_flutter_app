@@ -3,6 +3,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
 import 'package:xn_flutter_app/views/my_page/account_vm.dart';
 
+/*图片放在根目录下的images文件夹里*/
+imageNamed(String imageName,{double height, double width}) {
+  return Image.asset("assets/images/$imageName.png",height: height,width: width,);
+}
+
+divider() {
+
+  return Container(
+    height: 0.0,
+    margin: EdgeInsetsDirectional.only(start: 0),
+    decoration: BoxDecoration(
+      border: Border(
+        bottom: BorderSide(color: xn_split_color),
+      ),
+    ),
+  );
+}
+
 class MyPage extends StatefulWidget {
   @override
   _MyPageState createState() => _MyPageState();
@@ -21,6 +39,7 @@ class _MyPageState extends State<MyPage> {
       child: Center(
         child: _setupListView(),
       ),
+      backgroundColor: Colors.white,
     );
   }
 
@@ -28,14 +47,19 @@ class _MyPageState extends State<MyPage> {
   Widget _setupListView() {
 
     return ListView.builder(
-      itemCount: 1+this.accountVM.singleItems.length,
+      itemCount: 1+this.accountVM.groupCellModels.length+this.accountVM.singleItems.length,
       itemBuilder: (context,i) {
         if (i == 0) {
           return _setupHeader();
-        } else {
-          XNAccountSingleCellModel vm = this.accountVM.singleItems[i-1];
+        } else if (i<this.accountVM.groupCellModels.length+1) {
 
-          return Text(vm.title);
+          List list = this.accountVM.groupCellModels[i-1];
+
+          return _setupGroupCell(list);
+        } else {
+          XNAccountSingleCellModel vm = this.accountVM.singleItems[i-1-this.accountVM.groupCellModels.length];
+
+          return _setupSingleCell(vm);
         }
 
       });
@@ -65,5 +89,63 @@ class _MyPageState extends State<MyPage> {
 
     return Column(children: <Widget>[_setupNotLoginView()],mainAxisAlignment: MainAxisAlignment.center,);
   }
+
+  Widget _setupGroupCell(List list) {
+
+    Column left;
+    Column right;
+
+    if (list.length > 1) {
+
+      XNAccountSingleCellModel model = list[1];
+
+      var title = Padding(padding: EdgeInsets.only(left: 15),child:Text(model.title,style: TextStyle(fontSize: 14,color: Color(0xFF222222),fontWeight: FontWeight.bold)));
+      var tips = Padding(padding: EdgeInsets.only(left: 15),child:Text(model.value,style: TextStyle(fontSize: 14,color: Color(0xFF5F5F5F))));
+
+      right = Column(children: <Widget>[title,tips],crossAxisAlignment: CrossAxisAlignment.start,);
+
+    }
+
+    XNAccountSingleCellModel model = list[0];
+
+    var title = Padding(padding: EdgeInsets.only(left: 15),child:Text(model.title,style: TextStyle(fontSize: 14,color: Color(0xFF222222),fontWeight: FontWeight.bold)));
+    var tips = Padding(padding: EdgeInsets.only(left: 15),child:Text(model.value,style: TextStyle(fontSize: 14,color: Color(0xFF5F5F5F))));
+
+    left = Column(children: <Widget>[title,tips],crossAxisAlignment: CrossAxisAlignment.start,);
+
+    var splitLine = Container(
+      width: 1.0,
+      margin: EdgeInsetsDirectional.only(top: 0),
+      decoration: BoxDecoration(
+        border: Border(
+          left: BorderSide(color: xn_split_color),
+        ),
+      ),
+    );
+
+    Row row;
+
+    if (null != right) {
+       row = Row(children: <Widget>[Expanded(child: left),splitLine,Expanded(child: right)],);
+    } else {
+       row = Row(children: <Widget>[left],);
+    }
+
+    return row;
+  }
+
+  // Single Cell
+  Widget _setupSingleCell(XNAccountSingleCellModel model) {
+
+    var title = Padding(padding: EdgeInsets.only(left: 15),child: Text(model.title,style: TextStyle(fontSize: 14,color: Color(0xFF222222)),),);
+    var tips = Expanded(child: Text(model.value,style: TextStyle(fontSize: 14,color: Color(0xFF9B9B9B)),textAlign: TextAlign.end,));
+    var arrow = Padding(padding: EdgeInsets.only(right: 15,left: 5),child: imageNamed("right_more",width: 10,height: 14),);
+
+    Column column = Column(children: <Widget>[SizedBox(height: 50,child: Row(children: <Widget>[title,Spacer(),tips,arrow],),),
+    divider()],);
+
+    return column;
+  }
+
 
 }
