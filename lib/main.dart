@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage>
       var text = tabData[i]['text'];
       var icon = tabData[i]['icon'];
       var activeIcon = tabData[i]['activeIcon'];
-      if (Platform.isIOS) {
+      // if (Platform.isIOS) {
         xnTabItems.add(BottomNavigationBarItem(
             title: Text(text),
             backgroundColor: Colors.red,
@@ -74,16 +74,16 @@ class _MyHomePageState extends State<MyHomePage>
               width: 30,
               height: 30,
           )));
-      } 
-      if (Platform.isAndroid) {
-        xnTabs.add(Tab(
-          text: text,
-          icon: Image.asset(
-            icon,
-            width: 30,
-            height: 30,
-          )));
-      }
+      // } 
+      // if (Platform.isAndroid) {
+      //   xnTabs.add(Tab(
+      //     text: text,
+      //     icon: Image.asset(
+      //       icon,
+      //       width: 30,
+      //       height: 30,
+      //     )));
+      // }
     }
   }
 
