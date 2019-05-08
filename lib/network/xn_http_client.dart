@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'dart:async';
 import 'dart:io';
-import 'package:cookie_jar/cookie_jar.dart';
 
 BaseOptions options = new BaseOptions(
   baseUrl: "https://m.xiaoniu88.com:443/mobile/",
@@ -21,26 +20,56 @@ var dio = new Dio(options);
 
 class XNHttpClient {
   static Future get(String url, {Map<String, dynamic> params}) async {
-    var response = await dio.get(url, queryParameters: handleParamters(params));
+    Response response =
+        await dio.get(url, queryParameters: handleParamters(params));
     print(response.data);
     return response.data;
   }
 
   static Future post(String url, Map<String, dynamic> params) async {
+    //开启打印日志
+    dio.interceptors.add(LogInterceptor(responseBody: true));
+
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (client) {
-      // client.findProxy = (uri) {
-      //   //修改这个才能抓包 本机地址：端口
-      //   return "PROXY 172.20.17.11:443";
-      // };
+      client.findProxy = (uri) {
+        //修改这个才能抓包 本机地址：端口
+        return "PROXY 172.20.17.11:443";
+      };
       client.badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
     };
 
-    var response =
-        await dio.post(url, data: handleParamters(params));
-    print(response.data);
-    return response.data;
+    dio.interceptors
+        .add(InterceptorsWrapper(onRequest: (RequestOptions options) {
+      // Do something before request is sent
+      return options;
+    }, onResponse: (Response response) {
+      // Do something with response data
+      return response;
+    }, onError: (DioError e) {
+      // Do something with response error
+      return e;
+    }));
+
+    Response response;
+    try {
+      response = await dio.post(url, data: handleParamters(params));
+      print(response.data);
+      return response.data;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print(e.response.data);
+        print(e.response.headers);
+        print(e.response.request);
+      } else {
+        // Something happened in setting up or sending the request that triggered an Error
+        print(e.request);
+        print(e.message);
+      }
+    }
+
+    return {};
   }
 }
 

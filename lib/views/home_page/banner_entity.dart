@@ -1,6 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
-
 part 'banner_entity.g.dart';
+
+abstract class BaseEntity {
+}
 
 //创建一个实体类，并标注 @JsonSerializable() 
 //添加属性，并添加构造方法
@@ -14,6 +16,8 @@ part 'banner_entity.g.dart';
 //在flutter项目的根目录下运行 flutter packages pub run build_runner build
 //会自动生成 ClassName.g.dart 文件 
 //factory ?
+
+
 
 @JsonSerializable()
 class HomePageEntity {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io';
-import 'package:xn_flutter_app/views/finance.dart';
+import 'package:xn_flutter_app/views/finance_page/page/finance.dart';
 import 'package:xn_flutter_app/views/my.dart';
 import 'package:xn_flutter_app/views/home_page/home.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';

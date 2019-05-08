@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:xn_flutter_app/network/xn_http_client.dart';
 import 'dart:async';
 import 'package:xn_flutter_app/views/home_page/banner_entity.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:xn_flutter_app/views/home_page/home_banner.dart';
 import 'package:xn_flutter_app/views/home_page/home_entries.dart';
 import 'package:xn_flutter_app/component/empty_view.dart';
@@ -17,6 +17,7 @@ import 'package:xn_flutter_app/views/home_page/home_statistics_widget.dart';
 import 'package:xn_flutter_app/views/home_page/xn_bottomalert_widget.dart';
 import 'package:xn_flutter_app/views/home_page/floatWidget.dart';
 import 'package:xn_flutter_app/component/error_view.dart';
+import 'package:xn_flutter_app/component/loading_view.dart';
 
 GlobalKey<RefreshHeaderState> _headerKey = new GlobalKey<RefreshHeaderState>();
 GlobalKey<EasyRefreshState> _easyRefreshKey = new GlobalKey<EasyRefreshState>();
@@ -35,7 +36,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     CupertinoNavigationBar naviBar = _getNavigationBar();
-    print(naviBar.preferredSize.height);
     return CupertinoPageScaffold(
       navigationBar: naviBar,
       child: Material(
@@ -65,7 +65,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         onPressed: () {
-          print("点了");
           Navigator.of(context, rootNavigator: true)
               .push(CupertinoPageRoute(builder: (BuildContext context) {
             return EmptyPage();
@@ -225,16 +224,7 @@ class _HomeBodyState extends State<HomeBody> {
 }
 
 Widget _showLoading() {
-  return Center(
-      child: Container(
-    width: 50.0,
-    height: 50.0,
-    child: SpinKitRing(
-      color: Colors.orange,
-      size: 30,
-      lineWidth: 3,
-    ),
-  ));
+  return XNLoadingView();
 }
 
 Widget _getRefreshHeader() {
