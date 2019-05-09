@@ -147,6 +147,7 @@ class _HomeBodyState extends State<HomeBody> {
       return homePageEntity;
     } catch (e) {
       setState(() {
+        _homePageEntity = null;
         _hasError = true;
       });
 
@@ -162,7 +163,7 @@ class _HomeBodyState extends State<HomeBody> {
       child: _getListView(),
       refreshHeader: _getRefreshHeader(),
       onRefresh: () async {
-        _requestHome();
+        await _requestHome();
       },
     );
   }

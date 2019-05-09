@@ -39,8 +39,8 @@ class _FinancePageState extends State<FinancePage> {
             if(snapshot.hasError) {
               return XNErrorView(
                 callBack: () {
+                  bloc.sendinitData();
                   bloc.sendRequest();
-                  return _showLoading();
                 },
               );
             } else if(snapshot.data == 0) {
@@ -140,7 +140,7 @@ Widget _getRefresh(BuildContext context, AsyncSnapshot snapshot) {
       child: _buildList(snapshot),
       refreshHeader: _getRefreshHeader(),
       onRefresh: () async {
-        bloc.sendRequest();
+        await bloc.sendRequest();
       },
     );
   }

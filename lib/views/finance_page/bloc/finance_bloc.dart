@@ -9,6 +9,8 @@ class FinanceBloc implements BlocBase {
   Stream get outList => _syncController.stream;
 
   Future sendRequest() async {
+
+    await Future.delayed(new Duration(seconds: 2));
     //main/product.json
     var response = await XNHttpClient.post("main/product.json", null);
     if(response["code"] == "M00000") {
@@ -18,6 +20,10 @@ class FinanceBloc implements BlocBase {
       _syncController.sink.addError("error");
     }
 
+  }
+
+  void sendinitData() {
+      _syncController.sink.add(0);
   }
 
   FinanceBloc() {
