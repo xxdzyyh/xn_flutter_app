@@ -194,10 +194,10 @@ Widget _getRateWidget(FinanceProductEntity entity) {
               ),
             );
 
-    if (entity.maxAnnualRate == entity.minAnnualRate) {
-      list.add(minSpan);
-      list.add(symbolSpan);
-    } else {
+    list.add(minSpan);
+    list.add(symbolSpan);
+
+    if (entity.maxAnnualRate != entity.minAnnualRate) {
       list.add(toSpan);
       list.add(maxSpan);
       list.add(symbolSpan);

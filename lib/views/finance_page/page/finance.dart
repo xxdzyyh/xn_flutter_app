@@ -10,6 +10,9 @@ import 'package:xn_flutter_app/views/finance_page/widget/finance_space_widget.da
 import 'package:xn_flutter_app/views/finance_page/widget/finance_title_widget.dart';
 import 'package:xn_flutter_app/views/finance_page/widget/finance_recommond_widget.dart';
 import 'package:xn_flutter_app/views/finance_page/widget/finance_scroll_widget.dart';
+import 'package:xn_flutter_app/views/home_page/xn_bottomalert_widget.dart';
+import 'package:xn_flutter_app/views/finance_page/widget/finance_aproduct_widget.dart';
+import 'package:xn_flutter_app/views/finance_page/widget/finance_bproduct_widget.dart';
 
 class FinancePage extends StatefulWidget {
   @override
@@ -66,40 +69,56 @@ Widget _buildList(AsyncSnapshot snapshot) {
       list.add(
         FinanceRecommondWidget(itemEntity: itemEntity,),
       );
+    }
+    if(dataType == 1) {
       list.add(
         FinanceSpaceWidget(),
       );
-    }
-    if(dataType == 1) {
       list.add(
         FinanceTitleWidget(itemEntity: itemEntity,),
       );
       list.add(
         FinanceScrollWidget(itemEntity: itemEntity,),
       );
-      list.add(
-        FinanceSpaceWidget(),
-      );
+      
     }
     if(dataType == 2) {
       list.add(
-        FinanceTitleWidget(itemEntity: itemEntity,),
-      );
-
-      list.add(
         FinanceSpaceWidget(),
       );
+      list.add(
+        FinanceTitleWidget(itemEntity: itemEntity,),
+      );
+      for(int j=0; j<itemEntity.products.length; j++) {
+        list.add(FinanceAProductWidget(productEntity: itemEntity.products[j],));
+        if(j != itemEntity.products.length - 1) {
+          list.add(
+            Container(
+              height: 1.0,
+              color: xn_line_color,
+            )
+          );
+        }
+      }
     }
     if(dataType == 3) {
       list.add(
-        FinanceTitleWidget(itemEntity: itemEntity,),
-      );
-      list.add(
         FinanceSpaceWidget(),
       );
-    }
+      list.add(
+        FinanceTitleWidget(itemEntity: itemEntity,),
+      );
 
+      for(int j=0; j<itemEntity.products.length; j++) {
+        list.add(FinanceBProductWidget(productEntity: itemEntity.products[j],));
+
+      }
+    }
   }
+
+  list.add(
+      XNBottomAlertWidget(),
+    );
 
   ListView listView;
   listView = ListView(

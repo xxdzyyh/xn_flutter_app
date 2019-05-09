@@ -38,12 +38,9 @@ class _HomePageState extends State<HomePage> {
     CupertinoNavigationBar naviBar = _getNavigationBar();
     return CupertinoPageScaffold(
       navigationBar: naviBar,
-      child: Material(
-        color: Colors.white,
-        child: SafeArea(
+      child: SafeArea(
           child: HomeBody(),
         ),
-      ),
     );
   }
 

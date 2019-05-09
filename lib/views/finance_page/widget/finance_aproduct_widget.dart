@@ -5,79 +5,69 @@ import 'package:xn_flutter_app/uibuild/xnscale.dart';
 import 'package:xn_flutter_app/views/finance_page/model/finance_entity.dart';
 import 'package:xn_flutter_app/views/finance_page/widget/finance_border_widget.dart';
 
-class FinanceScrollWidget extends StatelessWidget {
-
-  final FinanceItemEntity itemEntity;
-  FinanceScrollWidget({Key key, this.itemEntity}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Colors.white,
-        height: XNScale.height(155),
-        padding: EdgeInsets.fromLTRB(0, XNScale.height(10), 0, XNScale.height(15)),
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: itemEntity.products.length,
-          padding:
-          EdgeInsets.fromLTRB(XNScale.width(10), 0, XNScale.width(10), 0),
-          itemExtent: (MediaQuery.of(context).size.width - XNScale.width(35)) / 2.3,
-          itemBuilder: (BuildContext context, int index) {
-            return FinanceScrollItemWidget(productEntity: itemEntity.products[index],); 
-          },
-        ),
-    );
-  }
-
-
-}
-
-class FinanceScrollItemWidget extends StatelessWidget {
+class FinanceAProductWidget extends StatelessWidget {
 
   final FinanceProductEntity productEntity;
-  FinanceScrollItemWidget({Key key, this.productEntity}) : super(key: key);
+  FinanceAProductWidget({Key key, this.productEntity}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(XNScale.width(5), XNScale.width(5), XNScale.width(5), XNScale.width(5)),
-      child: FinanceBorderWidget(
-          child: Column(
-            children: _buildColumn(),
-          )
-        ),
-    );
+      height: XNScale.height(92),
+      color: Colors.white,
+      child: Column(
+        children: _buildColumn(),
+      ),
+    ); 
   }
 
   List<Widget> _buildColumn() {
     List<Widget> list = List();
     list.add(
       Padding(
-        padding: EdgeInsets.fromLTRB(0, XNScale.height(25), 0, 0),
-        child: _getRateWidget(productEntity),
-      ),
-    );
-    list.add(
-      Padding(
-        padding: EdgeInsets.fromLTRB(0, XNScale.height(7), 0, 0),
-        child: Text(
-          "${productEntity.annualRateText}",
-          style: TextStyle(
-            fontSize: XNScale.fontSize(10),
-            color: xn_black_light,
-          )
+        padding: EdgeInsets.fromLTRB(XNScale.width(15), XNScale.height(22), 0, 0),
+        child: Row(
+          children: <Widget>[
+            SizedBox(
+              width: XNScale.width(205),
+              child: _getRateWidget(productEntity),
+            ),
+            Text(
+              "${productEntity.productDesc}",
+              style: TextStyle(
+                fontSize: XNScale.fontSize(14),
+                color: xn_black_normal,
+                fontWeight: FontWeight.bold,
+              )
+            )
+          ],
         ),
       ),
     );
+
     list.add(
       Padding(
-        padding: EdgeInsets.fromLTRB(0, XNScale.height(16), 0, 0),
-        child: Text(
-          "${productEntity.termAndTransferDesc}",
-          style: TextStyle(
-            fontSize: XNScale.fontSize(10),
-            color: Color(0xFF101010),
-          )
+        padding: EdgeInsets.fromLTRB(XNScale.width(15), XNScale.height(7), 0, 0),
+        child: Row(
+          children: <Widget>[
+            SizedBox(
+              width: XNScale.width(205),
+              child: Text(
+              "${productEntity.annualRateText}",
+              style: TextStyle(
+                fontSize: XNScale.fontSize(10),
+                color: xn_black_light,
+              )
+            ),
+            ),
+            Text(
+              "${productEntity.termAndTransferDesc}",
+              style: TextStyle(
+                fontSize: XNScale.fontSize(12),
+                color: xn_black_light,
+              )
+            )
+          ],
         ),
       ),
     );
@@ -85,13 +75,14 @@ class FinanceScrollItemWidget extends StatelessWidget {
     return list;
   }
 
-  Widget _getRateWidget(FinanceProductEntity entity) {
+
+Widget _getRateWidget(FinanceProductEntity entity) {
     Text text;
     List<TextSpan> list = List();
     TextSpan minSpan = TextSpan(
               text: "${entity.minAnnualRate.toDouble().toStringAsFixed(2)}",
               style: TextStyle(
-                fontSize: XNScale.fontSize(18),
+                fontSize: XNScale.fontSize(20),
                 color: xn_orange_2,
                 fontWeight: FontWeight.bold,
               ),
@@ -100,7 +91,7 @@ class FinanceScrollItemWidget extends StatelessWidget {
     TextSpan maxSpan = TextSpan(
               text: "${entity.maxAnnualRate.toDouble().toStringAsFixed(2)}",
               style: TextStyle(
-                fontSize: XNScale.fontSize(18),
+                fontSize: XNScale.fontSize(20),
                 color: xn_orange_2,
                 fontWeight: FontWeight.bold,
               ),
@@ -108,7 +99,7 @@ class FinanceScrollItemWidget extends StatelessWidget {
     TextSpan symbolSpan = TextSpan(
               text: "%",
               style: TextStyle(
-                fontSize: XNScale.fontSize(10),
+                fontSize: XNScale.fontSize(12),
                 color: xn_orange_2,
               ),
             );
@@ -116,16 +107,16 @@ class FinanceScrollItemWidget extends StatelessWidget {
     TextSpan addSpan = TextSpan(
               text: "+",
               style: TextStyle(
-                fontSize: XNScale.fontSize(14),
+                fontSize: XNScale.fontSize(12),
                 color: xn_orange_2,
               ),
             );
 
     TextSpan toSpan = TextSpan(
-              text: "-",
+              text: "${entity.betweenAnnualRateText}",
               style: TextStyle(
                 fontSize: XNScale.fontSize(12),
-                color: xn_orange_2,
+                color: Color(0xFF101010),
               ),
             );
 
@@ -142,7 +133,7 @@ class FinanceScrollItemWidget extends StatelessWidget {
       TextSpan extraSpan = TextSpan(
               text: "${entity.extraAnnualRate.toDouble().toStringAsFixed(2)}",
               style: TextStyle(
-                fontSize: XNScale.fontSize(12),
+                fontSize: XNScale.fontSize(20),
                 color: xn_orange_2,
                 fontWeight: FontWeight.bold,
               ),
@@ -158,7 +149,6 @@ class FinanceScrollItemWidget extends StatelessWidget {
       );
     return text;
   }
-
 
 
 }

@@ -50,6 +50,9 @@ class FinanceProductEntity {
   final String annualRateText;
   final String termAndTransferDesc;
   final String termRange;
+  final String termText;
+  final String betweenAnnualRateText;
+  final String productDesc;
   final int productBidType;
   final int deadline;
   final int sellOutFlag;
@@ -58,7 +61,7 @@ class FinanceProductEntity {
    this.maxAnnualRate, this.extraAnnualRate, this.status, this.startInvestingTime,
    this.detailUrl, this.matchSpecialRequirement, this.annualRateTooltip,
    this.banner,this.annualRateText, this.termAndTransferDesc, this.termRange, this.productBidType,
-   this.deadline, this.sellOutFlag});
+   this.deadline, this.sellOutFlag, this.betweenAnnualRateText, this.productDesc, this.termText});
   factory FinanceProductEntity.fromJson(Map<String, dynamic> json) {
     return _$FinanceProductEntityFromJson(json);
   }

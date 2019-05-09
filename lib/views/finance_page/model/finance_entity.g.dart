@@ -61,7 +61,10 @@ FinanceProductEntity _$FinanceProductEntityFromJson(Map<String, dynamic> json) {
       termRange: json['termRange'] as String,
       productBidType: json['productBidType'] as int,
       deadline: json['deadline'] as int,
-      sellOutFlag: json['sellOutFlag'] as int);
+      sellOutFlag: json['sellOutFlag'] as int,
+      betweenAnnualRateText: json['betweenAnnualRateText'] as String,
+      productDesc: json['productDesc'] as String,
+      termText: json['termText'] as String);
 }
 
 Map<String, dynamic> _$FinanceProductEntityToJson(
@@ -82,6 +85,9 @@ Map<String, dynamic> _$FinanceProductEntityToJson(
       'annualRateText': instance.annualRateText,
       'termAndTransferDesc': instance.termAndTransferDesc,
       'termRange': instance.termRange,
+      'termText': instance.termText,
+      'betweenAnnualRateText': instance.betweenAnnualRateText,
+      'productDesc': instance.productDesc,
       'productBidType': instance.productBidType,
       'deadline': instance.deadline,
       'sellOutFlag': instance.sellOutFlag
