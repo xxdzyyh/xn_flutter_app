@@ -29,7 +29,6 @@ class _HomeBannerState extends State<HomeBanner> {
       child: Swiper(
         index: 0,
         onIndexChanged: (value) {
-          print("这是啥");
         },
         onTap: (int index) {
           print("点击了第$index个banner");

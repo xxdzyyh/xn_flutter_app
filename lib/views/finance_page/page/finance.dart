@@ -7,8 +7,8 @@ import 'package:xn_flutter_app/component/error_view.dart';
 import 'package:xn_flutter_app/component/loading_view.dart';
 import 'package:xn_flutter_app/views/finance_page/model/finance_entity.dart';
 import 'package:xn_flutter_app/views/finance_page/widget/finance_space_widget.dart';
-import 'package:xn_flutter_app/views/finance_page/widget/finance_space_widget.dart';
 import 'package:xn_flutter_app/views/finance_page/widget/finance_title_widget.dart';
+import 'package:xn_flutter_app/views/finance_page/widget/finance_recommond_widget.dart';
 
 class FinancePage extends StatefulWidget {
   @override
@@ -62,15 +62,38 @@ Widget _buildList(AsyncSnapshot snapshot) {
       list.add(
         FinanceTitleWidget(itemEntity: itemEntity,),
       );
+      list.add(
+        FinanceRecommondWidget(itemEntity: itemEntity,),
+      );
+      list.add(
+        FinanceSpaceWidget(),
+      );
     }
     if(dataType == 1) {
-      
+      list.add(
+        FinanceTitleWidget(itemEntity: itemEntity,),
+      );
+
+      list.add(
+        FinanceSpaceWidget(),
+      );
     }
     if(dataType == 2) {
-      
+      list.add(
+        FinanceTitleWidget(itemEntity: itemEntity,),
+      );
+
+      list.add(
+        FinanceSpaceWidget(),
+      );
     }
     if(dataType == 3) {
-      
+      list.add(
+        FinanceTitleWidget(itemEntity: itemEntity,),
+      );
+      list.add(
+        FinanceSpaceWidget(),
+      );
     }
 
   }
