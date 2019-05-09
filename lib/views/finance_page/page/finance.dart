@@ -9,6 +9,7 @@ import 'package:xn_flutter_app/views/finance_page/model/finance_entity.dart';
 import 'package:xn_flutter_app/views/finance_page/widget/finance_space_widget.dart';
 import 'package:xn_flutter_app/views/finance_page/widget/finance_title_widget.dart';
 import 'package:xn_flutter_app/views/finance_page/widget/finance_recommond_widget.dart';
+import 'package:xn_flutter_app/views/finance_page/widget/finance_scroll_widget.dart';
 
 class FinancePage extends StatefulWidget {
   @override
@@ -73,7 +74,9 @@ Widget _buildList(AsyncSnapshot snapshot) {
       list.add(
         FinanceTitleWidget(itemEntity: itemEntity,),
       );
-
+      list.add(
+        FinanceScrollWidget(itemEntity: itemEntity,),
+      );
       list.add(
         FinanceSpaceWidget(),
       );

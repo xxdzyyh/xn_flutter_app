@@ -58,11 +58,171 @@ class FinanceRecommondItemWidget extends StatelessWidget {
   FinanceRecommondItemWidget({Key key, this.productEntity}):super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: _buildColumn(),
     );
   }
 
+List<Widget> _buildColumn() {
+  List<Widget> list = List();
+  list.add(
+    Stack(
+      alignment: AlignmentDirectional.center,
+      children: <Widget>[
+        Image.asset(
+          "assets/images/finance_netcredit_recommenditemtopview.png",
+          height: XNScale.height(24),
+        ),
+        Text(
+          "- ${productEntity.banner} -",
+          style: TextStyle(
+            fontSize: XNScale.fontSize(10),
+            color: Colors.white,
+          )
+        )
+      ],
+    )
+  );
+
+  list.add(
+    Padding(
+      padding: EdgeInsets.fromLTRB(XNScale.width(19), XNScale.height(15), 0, 0),
+      child: Text(
+        "${productEntity.typeText}",
+        style: TextStyle(
+          fontSize: XNScale.fontSize(14),
+          color: xn_black_normal,
+        ),
+      ),
+    )
+  );
+
+  list.add(
+    Padding(
+      padding: EdgeInsets.fromLTRB(XNScale.width(19), XNScale.height(13), 0, 0),
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            width: XNScale.width(143),
+            child: _getRateWidget(productEntity),
+          ),
+          Text(
+            "${productEntity.termRange}",
+            style: TextStyle(
+              fontSize: XNScale.fontSize(14),
+              color: xn_black_normal,
+            ),
+          )
+        ],
+      ),
+    )
+  );
+
+  list.add(
+    Padding(
+      padding: EdgeInsets.fromLTRB(XNScale.width(19), XNScale.height(5), 0, 0),
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            width: XNScale.width(143),
+            child: Text(
+            "${productEntity.annualRateText}",
+            style: TextStyle(
+              fontSize: XNScale.fontSize(10),
+              color: xn_black_light,
+            ),
+          ),
+          ),
+          Text(
+            "${productEntity.termAndTransferDesc}",
+            style: TextStyle(
+              fontSize: XNScale.fontSize(10),
+              color: xn_black_light,
+            ),
+          )
+        ],
+      ),
+    )
+  );
+
+  return list;
+}
+
+
+Widget _getRateWidget(FinanceProductEntity entity) {
+    Text text;
+    List<TextSpan> list = List();
+    TextSpan minSpan = TextSpan(
+              text: "${entity.minAnnualRate.toDouble().toStringAsFixed(2)}",
+              style: TextStyle(
+                fontSize: XNScale.fontSize(20),
+                color: xn_orange_2,
+                fontWeight: FontWeight.bold,
+              ),
+            );
+
+    TextSpan maxSpan = TextSpan(
+              text: "${entity.maxAnnualRate.toDouble().toStringAsFixed(2)}",
+              style: TextStyle(
+                fontSize: XNScale.fontSize(20),
+                color: xn_orange_2,
+                fontWeight: FontWeight.bold,
+              ),
+            );
+    TextSpan symbolSpan = TextSpan(
+              text: "%",
+              style: TextStyle(
+                fontSize: XNScale.fontSize(12),
+                color: xn_orange_2,
+              ),
+            );
+
+    TextSpan addSpan = TextSpan(
+              text: "+",
+              style: TextStyle(
+                fontSize: XNScale.fontSize(12),
+                color: xn_orange_2,
+              ),
+            );
+
+    TextSpan toSpan = TextSpan(
+              text: "-",
+              style: TextStyle(
+                fontSize: XNScale.fontSize(12),
+                color: xn_orange_2,
+              ),
+            );
+
+    if (entity.maxAnnualRate == entity.minAnnualRate) {
+      list.add(minSpan);
+      list.add(symbolSpan);
+    } else {
+      list.add(toSpan);
+      list.add(maxSpan);
+      list.add(symbolSpan);
+    }
+    if(entity.extraAnnualRate != null && entity.extraAnnualRate > 0) {
+      list.add(addSpan);
+      TextSpan extraSpan = TextSpan(
+              text: "${entity.extraAnnualRate.toDouble().toStringAsFixed(2)}",
+              style: TextStyle(
+                fontSize: XNScale.fontSize(20),
+                color: xn_orange_2,
+                fontWeight: FontWeight.bold,
+              ),
+            );
+        list.add(extraSpan);
+        list.add(symbolSpan);
+    }
+
+    text = Text.rich(
+        TextSpan(
+          children: list,
+        ),
+      );
+    return text;
+  }
 
 
 }

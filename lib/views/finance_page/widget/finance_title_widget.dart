@@ -75,7 +75,7 @@ class FinanceTitleWidget extends StatelessWidget {
           child: Container(
               padding: EdgeInsets.fromLTRB(XNScale.width(4), XNScale.width(1),
                   XNScale.width(4), XNScale.width(1)),
-              color: Color.fromARGB(70, 255, 68, 0),
+              color: Color.fromARGB(25, 255, 68, 0),
               child: Text(
                 "${itemEntity.desc2}",
                 style: TextStyle(
