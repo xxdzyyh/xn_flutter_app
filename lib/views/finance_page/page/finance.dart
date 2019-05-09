@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
-import 'package:xn_flutter_app/bloc/bloc_provider.dart';
 import 'package:xn_flutter_app/views/finance_page/bloc/finance_bloc.dart';
-import 'package:xn_flutter_app/uibuild/xncolor.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:xn_flutter_app/component/error_view.dart';
 import 'package:xn_flutter_app/component/loading_view.dart';
 import 'package:xn_flutter_app/views/finance_page/model/finance_entity.dart';
-
+import 'package:xn_flutter_app/views/finance_page/widget/finance_space_widget.dart';
+import 'package:xn_flutter_app/views/finance_page/widget/finance_space_widget.dart';
+import 'package:xn_flutter_app/views/finance_page/widget/finance_title_widget.dart';
 
 class FinancePage extends StatefulWidget {
   @override
@@ -32,15 +32,20 @@ class _FinancePageState extends State<FinancePage> {
           stream: bloc.outList,
           initialData: 0,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasError) {
+            if(snapshot.hasError) {
               return XNErrorView(
                 callBack: () {
                   bloc.sendRequest();
+                  return _showLoading();
                 },
               );
-            } else {
+            } else if(snapshot.data == 0) {
+               return _showLoading();
+            }
+             else {
               return _getRefresh(context, snapshot);
             }
+
           },
         ),
       ),
@@ -49,11 +54,14 @@ class _FinancePageState extends State<FinancePage> {
 
 Widget _buildList(AsyncSnapshot snapshot) {
   FinanceListEntity listEntity = snapshot.data;
+  List<Widget> list = List();
   for(int i=0; i<listEntity.categories.length; i++) {
     FinanceItemEntity itemEntity = listEntity.categories != null ? listEntity.categories[i] : null;
     int dataType = itemEntity.dataType;
     if(dataType == 0) {
-
+      list.add(
+        FinanceTitleWidget(itemEntity: itemEntity,),
+      );
     }
     if(dataType == 1) {
       
@@ -64,19 +72,21 @@ Widget _buildList(AsyncSnapshot snapshot) {
     if(dataType == 3) {
       
     }
+
   }
 
   ListView listView;
   listView = ListView(
-    children: <Widget>[
-
-    ],
+    children: list,
   );
 
   return listView;
 }
 
 
+Widget _showLoading() {
+  return XNLoadingView();
+}
 
 Widget _getRefresh(BuildContext context, AsyncSnapshot snapshot) {
     return EasyRefresh(
