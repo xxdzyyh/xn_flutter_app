@@ -27,3 +27,4 @@ const Color xn_line_color = Color(0xFFEEEEEE);
 ///0xd0d0d0
 const Color xn_split_color = Color(0xFFD0D0D0);
 
+const Color xn_clear_color = Color(0x00000000);

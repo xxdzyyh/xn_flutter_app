@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
+import 'package:xn_flutter_app/uibuild/xnscale.dart';
 import 'package:xn_flutter_app/views/my_page/account_vm.dart';
+
 
 /*图片放在根目录下的images文件夹里*/
 imageNamed(String imageName,{double height, double width}) {
@@ -28,10 +30,16 @@ class MyPage extends StatefulWidget {
 
 class _MyPageState extends State<MyPage> {
 
+  double topPadding;
+  double bottomPadding;
+
   var accountVM = XNAccoutVM();
 
   @override
   Widget build(BuildContext context) {
+    topPadding = MediaQuery.of(context).padding.top;
+    bottomPadding = MediaQuery.of(context).padding.bottom;
+
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text("我的"),
@@ -71,23 +79,124 @@ class _MyPageState extends State<MyPage> {
   _setupNotLoginView() {
 
     Widget welcomeLabel = Text("注册送518元红包",style: TextStyle(fontSize: 14),);
-    Widget tipsLabel = Text("越投入越美好",style: TextStyle(fontSize: 14));
-    Widget loginButton = CupertinoButton(child: Text("登录/注册",style: TextStyle(fontSize: 14)), onPressed: (){
-      print("登录/注册");
-    });
 
-    return Column(
-      children: <Widget>[ welcomeLabel,
-                          tipsLabel ,
-                          loginButton],
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
+    welcomeLabel = Text.rich(
+        TextSpan(text: "注册送",
+          style: TextStyle(fontSize: 14,color:Colors.white),
+          children: <TextSpan>[
+            TextSpan(text: '518',style: TextStyle(fontSize: 32,color: xn_orange),),
+            TextSpan(text: "元",style: TextStyle(fontSize: 14,color:xn_orange)),
+            TextSpan(text: "红包",style: TextStyle(fontSize: 14,color:Colors.white))
+      ]),
+
+    );
+
+    Widget tipsLabel = Text("越投入越美好",style: TextStyle(fontSize: 12,color: Colors.white));
+
+    Widget loginButton = SizedBox(
+      height: XNScale.height(32),
+      width: XNScale.width(110),
+      child: OutlineButton(
+        child: Text("登录/注册", style: TextStyle(fontSize: 14)),
+        onPressed: (){
+          print("登录/注册");
+        },
+        textColor: Colors.white,
+        splashColor: xn_clear_color,
+        borderSide: BorderSide(color: Colors.white),
+        color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(XNScale.height(32)/2.0)),
+      )
+    );
+
+    return Container(
+      width: MediaQuery.of(this.context).size.width,
+      height: XNScale.height(122+44+topPadding),
+      child: Column(
+        children: <Widget>[ welcomeLabel,
+        Padding(padding: EdgeInsets.only(top: XNScale.height(5)),child: tipsLabel,) ,
+        Padding(padding: EdgeInsets.only(bottom: XNScale.height(20.0+7.0),top: XNScale.height(20.0)),child: loginButton,)],
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+      ),
+      color: Colors.green,
+    );
+  }
+
+  _setupBalanceView() {
+
+    Column left;
+    Column right;
+
+    var leftTitle = Padding(padding: EdgeInsets.only(left: 15),child:Text("网贷余额(元)",style: TextStyle(fontSize: 14,color: Color(0xFF222222),fontWeight: FontWeight.bold)));
+    var leftTips = Padding(padding: EdgeInsets.only(left: 15),child:Text("--",style: TextStyle(fontSize: 14,color: Color(0xFF5F5F5F))));
+
+    right = Column(children: <Widget>[leftTitle,leftTips],crossAxisAlignment: CrossAxisAlignment.center,);
+
+
+    var rightTitle = Padding(padding: EdgeInsets.only(left: 15),child:Text("智盈余额(元)",style: TextStyle(fontSize: 14,color: Color(0xFF222222),fontWeight: FontWeight.bold)));
+    var rightTips = Padding(padding: EdgeInsets.only(left: 15),child:Text("--",style: TextStyle(fontSize: 14,color: Color(0xFF5F5F5F))));
+
+    left = Column(children: <Widget>[rightTitle,rightTips],crossAxisAlignment: CrossAxisAlignment.center,);
+
+    var splitLine = Container(
+      width: 1.0,
+      height: XNScale.height(64),
+      color: xn_split_color,
+    );
+
+    Row row;
+
+    if (null != right) {
+      row = Row(children: <Widget>[Expanded(child: left),splitLine,Expanded(child: right)],);
+    } else {
+      row = Row(children: <Widget>[left],);
+    }
+
+    return Column(children: <Widget>[row,divider()],);
+  }
+
+  _setupOperationView() {
+    
+    var withDrawButton = CupertinoButton(
+      child: Text("提现",style: TextStyle(color: xn_orange,fontSize: 14),), 
+      onPressed: null,
+      minSize: 30,
+      padding: EdgeInsets.all(0),
+    );
+    
+    var rechargeButton = CupertinoButton(
+      child: Text("充值",style: TextStyle(color: xn_orange,fontSize: 14),),
+      onPressed: null,
+      minSize: 30,
+      padding: EdgeInsets.all(0),
+    );
+
+    var splitLine = Container(
+      width: 1.0,
+      height: XNScale.height(44),
+      color: xn_split_color,
+    );
+
+    return Container(height: XNScale.height(44),child: Row(children: <Widget>[Expanded(child: withDrawButton) ,splitLine,Expanded(child: rechargeButton)],
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+      )
     );
   }
 
   _setupHeader() {
 
-    return Column(children: <Widget>[_setupNotLoginView()],mainAxisAlignment: MainAxisAlignment.center,);
+    var backgroundView = Container(
+      height: XNScale.height((122.0 + 64.0 + 44.0 + 44 + this.topPadding)),
+      width: MediaQuery.of(this.context).size.width,
+      color: Colors.blue,);
+
+
+    Stack stack = Stack(children: <Widget>[backgroundView,Column(children: <Widget>[_setupNotLoginView(),_setupBalanceView(),_setupOperationView()],)],
+    alignment: AlignmentDirectional.topCenter);
+
+    return stack;
   }
 
   Widget _setupGroupCell(List list) {
@@ -115,12 +224,8 @@ class _MyPageState extends State<MyPage> {
 
     var splitLine = Container(
       width: 1.0,
-      margin: EdgeInsetsDirectional.only(top: 0),
-      decoration: BoxDecoration(
-        border: Border(
-          left: BorderSide(color: xn_split_color),
-        ),
-      ),
+      height: XNScale.height(50),
+      color: xn_split_color,
     );
 
     Row row;
@@ -131,7 +236,7 @@ class _MyPageState extends State<MyPage> {
        row = Row(children: <Widget>[left],);
     }
 
-    return row;
+    return Column(children: <Widget>[row,divider()],);
   }
 
   // Single Cell
