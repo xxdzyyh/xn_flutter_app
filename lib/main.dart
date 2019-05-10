@@ -12,21 +12,19 @@ Map<int, Color> color = {};
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
+      routes: {
+      },
       theme: CupertinoThemeData(
-        scaffoldBackgroundColor: xn_bg_color,
-        textTheme: CupertinoTextThemeData(
-          navTitleTextStyle: TextStyle(
-            color: Color(0xFF333333),
-            fontSize: 19,
-            fontWeight: FontWeight.normal
-          )
-        )
-      ),
+          scaffoldBackgroundColor: xn_bg_color,
+          textTheme: CupertinoTextThemeData(
+              navTitleTextStyle: TextStyle(
+                  color: Color(0xFF333333),
+                  fontSize: 19,
+                  fontWeight: FontWeight.normal))),
       home: MyHomePage(title: '小牛在线'),
     );
   }
@@ -45,9 +43,21 @@ class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
   TabController controller;
   static List tabData = [
-    {"text": "首页", "icon": "assets/images/tabbar_item_home_normal.png", "activeIcon": "assets/images/tabbar_item_home_selected.png"},
-    {"text": "项目", "icon": "assets/images/tabbar_item_ financial_normal.png", "activeIcon": "assets/images/tabbar_item_ financial_selected.png"},
-    {"text": "我的", "icon": "assets/images/tabbar_item_account_normal.png", "activeIcon": "assets/images/tabbar_item_account_selected.png"}
+    {
+      "text": "首页",
+      "icon": "assets/images/tabbar_item_home_normal.png",
+      "activeIcon": "assets/images/tabbar_item_home_selected.png"
+    },
+    {
+      "text": "项目",
+      "icon": "assets/images/tabbar_item_ financial_normal.png",
+      "activeIcon": "assets/images/tabbar_item_ financial_selected.png"
+    },
+    {
+      "text": "我的",
+      "icon": "assets/images/tabbar_item_account_normal.png",
+      "activeIcon": "assets/images/tabbar_item_account_selected.png"
+    }
   ];
   List<Widget> xnTabs = [];
   List<BottomNavigationBarItem> xnTabItems = [];
@@ -60,30 +70,19 @@ class _MyHomePageState extends State<MyHomePage>
       var text = tabData[i]['text'];
       var icon = tabData[i]['icon'];
       var activeIcon = tabData[i]['activeIcon'];
-      // if (Platform.isIOS) {
-        xnTabItems.add(BottomNavigationBarItem(
-            title: Text(text),
-            backgroundColor: Colors.red,
-            activeIcon: Image.asset(
-              activeIcon,
-              width: 30,
-              height: 30,
-            ),
-            icon: Image.asset(
-              icon,
-              width: 30,
-              height: 30,
+      xnTabItems.add(BottomNavigationBarItem(
+          title: Text(text),
+          backgroundColor: Colors.red,
+          activeIcon: Image.asset(
+            activeIcon,
+            width: 30,
+            height: 30,
+          ),
+          icon: Image.asset(
+            icon,
+            width: 30,
+            height: 30,
           )));
-      // } 
-      // if (Platform.isAndroid) {
-      //   xnTabs.add(Tab(
-      //     text: text,
-      //     icon: Image.asset(
-      //       icon,
-      //       width: 30,
-      //       height: 30,
-      //     )));
-      // }
     }
   }
 
@@ -91,41 +90,39 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   Widget build(BuildContext context) {
-
     //页面、字体适配
     XNScale.config(context, 320, 568);
 
     var cupertino = CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(
-        items: xnTabItems,
-        activeColor: xn_orange,
-        inactiveColor: xn_black_dark,
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-      ),
-      tabBuilder: (context, index) {
-        return CupertinoTabView(  
-          builder: (context) {
-            switch (index) {
-              case 0:
-                return HomePage();
-                break;
-              case 1:
-                return FinancePage();
-                break;
-              case 2:
-                return MyPage();
-                break;
-            }
+        tabBar: CupertinoTabBar(
+          items: xnTabItems,
+          activeColor: xn_orange,
+          inactiveColor: xn_black_dark,
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
           },
-        );
-      }
-    );
+        ),
+        tabBuilder: (context, index) {
+          // return CupertinoTabView(
+          // builder: (context) {
+          switch (index) {
+            case 0:
+              return HomePage();
+              break;
+            case 1:
+              return FinancePage();
+              break;
+            case 2:
+              return MyPage();
+              break;
+          }
+          // },
+          // );
+        });
 
     return cupertino;
-    }
+  }
 }

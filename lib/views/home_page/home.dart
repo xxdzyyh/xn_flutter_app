@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
@@ -62,10 +61,17 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         onPressed: () {
-          Navigator.of(context, rootNavigator: true)
-              .push(CupertinoPageRoute(builder: (BuildContext context) {
-            return EmptyPage();
-          }));
+          // Navigator.of(context, rootNavigator: true)
+          //     .push(CupertinoPageRoute(builder: (BuildContext context) {
+          //   return EmptyPage();
+          // }));
+          Navigator.of(context).push(
+            CupertinoPageRoute(
+              builder: (BuildContext context) {
+                    return EmptyPage();
+              }
+            )
+          );
         },
       ),
     );

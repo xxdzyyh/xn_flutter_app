@@ -21,7 +21,7 @@ class _EmptyPageState extends State<EmptyPage> {
             height: 20,
           ),
           onPressed: () {
-            Navigator.of(context, rootNavigator: true).pop();
+            Navigator.of(context).pop();
           },
         ),
       ),

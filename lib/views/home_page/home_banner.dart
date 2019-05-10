@@ -32,11 +32,19 @@ class _HomeBannerState extends State<HomeBanner> {
         },
         onTap: (int index) {
           print("点击了第$index个banner");
-          Navigator.of(context, rootNavigator: true)
-              .push(CupertinoPageRoute(builder: (BuildContext context) {
-            return XNWebView(url: _list[index].href);
-          })
-		      );
+          // Navigator.of(context, rootNavigator: true)
+          //     .push(CupertinoPageRoute(builder: (BuildContext context) {
+          //   return XNWebView(url: _list[index].href);
+          // })
+		      // );
+
+          Navigator.of(context).push(
+            CupertinoPageRoute(
+              builder: (BuildContext context) {
+                return XNWebView(url: _list[index].href);
+              }
+            )
+          );
           
         },
         itemBuilder: (BuildContext context, int index) {

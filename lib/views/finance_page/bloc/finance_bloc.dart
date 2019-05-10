@@ -10,7 +10,7 @@ class FinanceBloc implements BlocBase {
 
   Future sendRequest() async {
 
-    await Future.delayed(new Duration(seconds: 2));
+    // await Future.delayed(new Duration(seconds: 2));
     //main/product.json
     var response = await XNHttpClient.post("main/product.json", null);
     if(response["code"] == "M00000") {
