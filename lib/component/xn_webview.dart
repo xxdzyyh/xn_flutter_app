@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:async';
 import 'package:xn_flutter_app/bloc/bloc_provider.dart';
+import 'package:xn_flutter_app/router/application.dart';
 
 class XNWebView extends StatefulWidget {
   final String title;
@@ -39,6 +40,7 @@ class _XNWebViewState extends State<XNWebView> {
             navigationDelegate: (NavigationRequest request) {
               if(request.url.startsWith("xnoapp://xno.cn/")) {
                 print("即将打开 ${request.url}");
+                Application.router.navigateTo(context, handle(request.url));
                 return NavigationDecision.prevent;
               }
               return NavigationDecision.navigate;

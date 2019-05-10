@@ -3,6 +3,7 @@ import 'package:flutter/painting.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
 import 'package:xn_flutter_app/uibuild/xnscale.dart';
 import 'package:xn_flutter_app/views/home_page/banner_entity.dart';
+import 'package:xn_flutter_app/router/application.dart';
 
 class HomeProductWidget extends StatefulWidget {
   final HomePageEntity homeEntity;
@@ -94,7 +95,11 @@ class _HomeProductItemWidgetState extends State<HomeProductItemWidget> {
         child: Padding(
           padding: EdgeInsets.fromLTRB(XNScale.width(15), XNScale.height(2),
               XNScale.width(15), XNScale.height(8)),
-          child: DecoratedBox(
+          child: GestureDetector(
+            onTap: () {
+              Application.router.navigateTo(context, handle(widget.categoryEntity.url));
+            },
+            child: DecoratedBox(
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(5.0),
@@ -108,6 +113,7 @@ class _HomeProductItemWidgetState extends State<HomeProductItemWidget> {
               color: Colors.white,
               child: _getContent(),
             ),
+          ),
           ),
         ));
   }
@@ -234,7 +240,11 @@ class _HomeProductItemMoreWidgetState extends State<HomeProductItemMoreWidget> {
           child: Padding(
             padding: EdgeInsets.fromLTRB(XNScale.width(5), XNScale.height(2),
                 XNScale.width(5), XNScale.height(8)),
-            child: DecoratedBox(
+            child: GestureDetector(
+              onTap: () {
+                Application.router.navigateTo(context, handle(widget.categoryEntity.url));
+              },
+              child: DecoratedBox(
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5.0),
@@ -283,6 +293,7 @@ class _HomeProductItemMoreWidgetState extends State<HomeProductItemMoreWidget> {
                   ),
                 ),
               ),
+            ),
             ),
           )),
     );

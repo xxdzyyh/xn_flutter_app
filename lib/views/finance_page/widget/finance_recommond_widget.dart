@@ -5,6 +5,7 @@ import 'package:xn_flutter_app/uibuild/xnscale.dart';
 import 'package:xn_flutter_app/views/finance_page/model/finance_entity.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:xn_flutter_app/views/finance_page/widget/finance_border_widget.dart';
+import 'package:xn_flutter_app/router/application.dart';
 
 class FinanceRecommondWidget extends StatelessWidget {
   final FinanceItemEntity itemEntity;
@@ -15,12 +16,16 @@ class FinanceRecommondWidget extends StatelessWidget {
     return Container(
       height: XNScale.height(184),
       color: Colors.white,
-      child: _buildSwip(),
+      child: _buildSwip(context),
     );
   }
 
-  Widget _buildSwip() {
+  Widget _buildSwip(BuildContext context) {
     return Swiper(
+      onTap: (int index) {
+        FinanceProductEntity product = itemEntity.products[index];
+        Application.router.navigateTo(context, handle(product.detailUrl));
+      },
       itemBuilder: (BuildContext context, int index) {
         return Container(
           padding: EdgeInsets.fromLTRB(0, XNScale.height(15), 0, XNScale.height(5)),
@@ -73,6 +78,7 @@ List<Widget> _buildColumn() {
         Image.asset(
           "assets/images/finance_netcredit_recommenditemtopview.png",
           height: XNScale.height(24),
+          fit: BoxFit.fitWidth,
         ),
         Text(
           "- ${productEntity.banner} -",

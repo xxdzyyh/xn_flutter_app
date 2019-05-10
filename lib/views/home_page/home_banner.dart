@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:xn_flutter_app/views/home_page/banner_entity.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:xn_flutter_app/component/xn_webview.dart';
 import 'package:xn_flutter_app/uibuild/xnscale.dart';
 import 'package:xn_flutter_app/router/application.dart';
 
@@ -28,7 +27,9 @@ class _HomeBannerState extends State<HomeBanner> {
       height: XNScale.height(150),
       color: Colors.white,
       child: Swiper(
+        autoplay: true,
         index: 0,
+        autoplayDelay:10000,
         onIndexChanged: (value) {
         },
         onTap: (int index) {

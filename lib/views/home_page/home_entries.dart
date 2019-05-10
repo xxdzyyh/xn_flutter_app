@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xn_flutter_app/views/home_page/banner_entity.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
 import 'package:xn_flutter_app/uibuild/xnscale.dart';
-import 'package:xn_flutter_app/uibuild/xnscale.dart';
+import 'package:xn_flutter_app/router/application.dart';
 
 class HomeEntriesPage extends StatefulWidget {
   final HomePageEntity homeEntity;
@@ -56,6 +56,7 @@ class _State extends State<HomeEntryItem> {
       child: GestureDetector(
           onTap: () {
             print("点击了入口 ${widget.entity.title}");
+            Application.router.navigateTo(context, handle(widget.entity.url));
           },
           child: Padding(
             padding: EdgeInsets.fromLTRB(0, XNScale.height(13), 0, 0),
@@ -124,7 +125,7 @@ class _HomeBannerPageState extends State<HomeBannerPage> {
             color: Colors.white,
             child: GestureDetector(
               onTap: () {
-                print("点击了banner");
+                Application.router.navigateTo(context, handle(_banner.url));
               },
               child: Image.network(
                 _banner.imgUrl,

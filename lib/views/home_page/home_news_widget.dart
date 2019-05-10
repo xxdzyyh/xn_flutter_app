@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
 import 'package:xn_flutter_app/uibuild/xnscale.dart';
 import 'package:xn_flutter_app/views/home_page/banner_entity.dart';
+import 'package:xn_flutter_app/router/application.dart';
 
 class HomeNewsWidget extends StatefulWidget {
   final HomePageEntity homeEntity;
@@ -61,7 +62,11 @@ class _HomeNewsItemWidgetState extends State<HomeNewsItemWidget> {
     return Padding(
       padding: EdgeInsets.fromLTRB(XNScale.width(7.5), XNScale.height(2),
           XNScale.width(7.5), XNScale.height(13)),
-      child: DecoratedBox(
+      child: GestureDetector(
+        onTap: () {
+          Application.router.navigateTo(context, handle(widget.newsBannerEntity.url));
+        },
+        child: DecoratedBox(
         decoration: BoxDecoration(color: Colors.white, boxShadow: [
           BoxShadow(
               color: Colors.grey[300], offset: Offset(1.0, 1.0), blurRadius: 5.0)
@@ -87,6 +92,7 @@ class _HomeNewsItemWidgetState extends State<HomeNewsItemWidget> {
             )
           ],
         ),
+      ),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:xn_flutter_app/uibuild/xncolor.dart';
 import 'package:xn_flutter_app/uibuild/xnscale.dart';
 import 'package:xn_flutter_app/views/finance_page/model/finance_entity.dart';
 import 'package:xn_flutter_app/views/finance_page/widget/finance_border_widget.dart';
+import 'package:xn_flutter_app/router/application.dart';
 
 class FinanceScrollWidget extends StatelessWidget {
 
@@ -39,13 +40,18 @@ class FinanceScrollItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: () {
+        Application.router.navigateTo(context, handle(productEntity.detailUrl));
+      },
+      child: Container(
       padding: EdgeInsets.fromLTRB(XNScale.width(5), XNScale.width(5), XNScale.width(5), XNScale.width(5)),
       child: FinanceBorderWidget(
           child: Column(
             children: _buildColumn(),
           )
         ),
+    ),
     );
   }
 

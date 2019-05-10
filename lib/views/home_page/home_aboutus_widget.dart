@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
 import 'package:xn_flutter_app/uibuild/xnscale.dart';
 import 'package:xn_flutter_app/views/home_page/banner_entity.dart';
+import 'package:xn_flutter_app/router/application.dart';
 
 class HomeAboutUsWidget extends StatefulWidget {
   final HomePageEntity homeEntity;
@@ -78,12 +79,17 @@ class HomeAboutUsItemWidget extends StatefulWidget {
 class _HomeAboutUsItemWidgetState extends State<HomeAboutUsItemWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: () {
+        Application.router.navigateTo(context, handle(widget.aboutUsEntity.url));
+      },
+      child: Container(
       height: XNScale.height(116),
       color: Colors.white,
       child: Row(
         children: _getRowWidget(),
       ),
+    ),
     );
   }
 
@@ -131,12 +137,6 @@ class _HomeAboutUsItemWidgetState extends State<HomeAboutUsItemWidget> {
         ],
       ),
     );
-
-/*
-
-,
-
-*/
 
     Padding right = Padding(
       padding: EdgeInsets.fromLTRB(0, 0, XNScale.width(15), 0),

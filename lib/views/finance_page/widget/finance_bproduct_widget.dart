@@ -4,6 +4,7 @@ import 'package:xn_flutter_app/uibuild/xncolor.dart';
 import 'package:xn_flutter_app/uibuild/xnscale.dart';
 import 'package:xn_flutter_app/views/finance_page/model/finance_entity.dart';
 import 'package:xn_flutter_app/views/finance_page/widget/finance_border_widget.dart';
+import 'package:xn_flutter_app/router/application.dart';
 
 class FinanceBProductWidget extends StatelessWidget {
   final FinanceProductEntity productEntity;
@@ -11,12 +12,17 @@ class FinanceBProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: () {
+        Application.router.navigateTo(context, handle(productEntity.detailUrl));
+      },
+      child: Container(
       color: Colors.white,
       height: XNScale.height(87),
       child: Column(
         children: _buildColumn(),
       ),
+    ),
     );
   }
 
