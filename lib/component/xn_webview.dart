@@ -38,14 +38,27 @@ class _XNWebViewState extends State<XNWebView> {
             },
             navigationDelegate: (NavigationRequest request) {
               if(request.url.startsWith("xnoapp://xno.cn/")) {
-                
+                print("即将打开 ${request.url}");
                 return NavigationDecision.prevent;
               }
               return NavigationDecision.navigate;
             } ,
-            javascriptChannels: <JavascriptChannel>[].toSet(),
+            javascriptChannels: <JavascriptChannel>[
+              _loginChannel(),
+            ].toSet(),
           ),
         ),
+    );
+  }
+
+
+  JavascriptChannel _loginChannel() {
+    //当前客户端已经改为js注入，所以这里并不奏效 这里只是表示用法
+    return JavascriptChannel(
+      name: "isLogin",
+      onMessageReceived: (JavascriptMessage message) {
+        print("调用了是否登录 $message");
+      }
     );
   }
 

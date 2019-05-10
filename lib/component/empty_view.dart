@@ -26,7 +26,7 @@ class _EmptyPageState extends State<EmptyPage> {
         ),
       ),
       child: Center(
-        child: Text('暂无内容'),
+        child: Text('为什么会出现404? \n\n请查看导航路径是否正确'),
       ),
     );
   }

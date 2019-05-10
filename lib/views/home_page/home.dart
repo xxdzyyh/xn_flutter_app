@@ -7,7 +7,6 @@ import 'dart:async';
 import 'package:xn_flutter_app/views/home_page/banner_entity.dart';
 import 'package:xn_flutter_app/views/home_page/home_banner.dart';
 import 'package:xn_flutter_app/views/home_page/home_entries.dart';
-import 'package:xn_flutter_app/component/empty_view.dart';
 import 'package:xn_flutter_app/views/home_page/home_title.dart';
 import 'package:xn_flutter_app/views/home_page/home_product_widget.dart';
 import 'package:xn_flutter_app/views/home_page/home_news_widget.dart';
@@ -17,6 +16,7 @@ import 'package:xn_flutter_app/views/home_page/xn_bottomalert_widget.dart';
 import 'package:xn_flutter_app/views/home_page/floatWidget.dart';
 import 'package:xn_flutter_app/component/error_view.dart';
 import 'package:xn_flutter_app/component/loading_view.dart';
+import 'package:xn_flutter_app/router/application.dart';
 
 GlobalKey<RefreshHeaderState> _headerKey = new GlobalKey<RefreshHeaderState>();
 GlobalKey<EasyRefreshState> _easyRefreshKey = new GlobalKey<EasyRefreshState>();
@@ -61,17 +61,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         onPressed: () {
-          // Navigator.of(context, rootNavigator: true)
-          //     .push(CupertinoPageRoute(builder: (BuildContext context) {
-          //   return EmptyPage();
-          // }));
-          Navigator.of(context).push(
-            CupertinoPageRoute(
-              builder: (BuildContext context) {
-                    return EmptyPage();
-              }
-            )
-          );
+          Application.router.navigateTo(context, "");
         },
       ),
     );

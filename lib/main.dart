@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'dart:io';
+import 'package:fluro/fluro.dart';
 import 'package:xn_flutter_app/views/finance_page/page/finance.dart';
 import 'package:xn_flutter_app/views/my.dart';
 import 'package:xn_flutter_app/views/home_page/home.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
 import 'uibuild/xnscale.dart';
+import './router/routers.dart';
+import './router/application.dart';
 
 Map<int, Color> color = {};
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  MyApp() {
+    final router = new Router();
+    Routes.configureRoutes(router);
+    Application.router = router;
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -26,6 +34,7 @@ class MyApp extends StatelessWidget {
                   fontSize: 19,
                   fontWeight: FontWeight.normal))),
       home: MyHomePage(title: '小牛在线'),
+      onGenerateRoute: Application.router.generator,
     );
   }
 }

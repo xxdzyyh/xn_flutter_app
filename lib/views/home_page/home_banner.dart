@@ -4,6 +4,7 @@ import 'package:xn_flutter_app/views/home_page/banner_entity.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:xn_flutter_app/component/xn_webview.dart';
 import 'package:xn_flutter_app/uibuild/xnscale.dart';
+import 'package:xn_flutter_app/router/application.dart';
 
 class HomeBanner extends StatefulWidget {
   final HomePageEntity homeEntity;
@@ -32,20 +33,8 @@ class _HomeBannerState extends State<HomeBanner> {
         },
         onTap: (int index) {
           print("点击了第$index个banner");
-          // Navigator.of(context, rootNavigator: true)
-          //     .push(CupertinoPageRoute(builder: (BuildContext context) {
-          //   return XNWebView(url: _list[index].href);
-          // })
-		      // );
-
-          Navigator.of(context).push(
-            CupertinoPageRoute(
-              builder: (BuildContext context) {
-                return XNWebView(url: _list[index].href);
-              }
-            )
-          );
-          
+          Application.router.navigateTo(context, handle(_list[index].href));
+      
         },
         itemBuilder: (BuildContext context, int index) {
           return Image.network(
