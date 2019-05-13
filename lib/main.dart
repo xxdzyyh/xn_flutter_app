@@ -95,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage>
     }
   }
 
-  int _currentIndex = 0;
+  int _currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {

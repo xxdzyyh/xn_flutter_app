@@ -15,7 +15,7 @@ class FinanceAProductWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Application.router.navigateTo(context, handle(productEntity.detailUrl));
+        Application.push(context, productEntity.detailUrl);
       },
       child: Container(
       height: XNScale.height(92),

@@ -56,7 +56,7 @@ class _State extends State<HomeEntryItem> {
       child: GestureDetector(
           onTap: () {
             print("点击了入口 ${widget.entity.title}");
-            Application.router.navigateTo(context, handle(widget.entity.url));
+            Application.push(context, widget.entity.url);
           },
           child: Padding(
             padding: EdgeInsets.fromLTRB(0, XNScale.height(13), 0, 0),
@@ -125,7 +125,7 @@ class _HomeBannerPageState extends State<HomeBannerPage> {
             color: Colors.white,
             child: GestureDetector(
               onTap: () {
-                Application.router.navigateTo(context, handle(_banner.url));
+                Application.push(context, _banner.url);
               },
               child: Image.network(
                 _banner.imgUrl,

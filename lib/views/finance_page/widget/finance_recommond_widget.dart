@@ -24,7 +24,7 @@ class FinanceRecommondWidget extends StatelessWidget {
     return Swiper(
       onTap: (int index) {
         FinanceProductEntity product = itemEntity.products[index];
-        Application.router.navigateTo(context, handle(product.detailUrl));
+        Application.push(context, product.detailUrl);
       },
       itemBuilder: (BuildContext context, int index) {
         return Container(

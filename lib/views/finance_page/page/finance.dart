@@ -30,7 +30,10 @@ class _FinancePageState extends State<FinancePage> {
   Widget build(BuildContext context) {
 
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(middle: Text("项目")),
+      navigationBar: CupertinoNavigationBar(
+        middle: Text("项目"),
+        transitionBetweenRoutes: false,
+        ),
       child: SafeArea(
         child: StreamBuilder(
           stream: bloc.outList,

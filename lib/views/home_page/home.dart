@@ -17,6 +17,7 @@ import 'package:xn_flutter_app/views/home_page/floatWidget.dart';
 import 'package:xn_flutter_app/component/error_view.dart';
 import 'package:xn_flutter_app/component/loading_view.dart';
 import 'package:xn_flutter_app/router/application.dart';
+import 'package:fluro/fluro.dart';
 
 GlobalKey<RefreshHeaderState> _headerKey = new GlobalKey<RefreshHeaderState>();
 GlobalKey<EasyRefreshState> _easyRefreshKey = new GlobalKey<EasyRefreshState>();
@@ -45,6 +46,7 @@ class _HomePageState extends State<HomePage> {
 
   CupertinoNavigationBar _getNavigationBar() {
     return CupertinoNavigationBar(
+      transitionBetweenRoutes: false,
       middle: Image.asset(
         "assets/images/home_nav_logo.png",
         width: 65,
@@ -61,7 +63,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         onPressed: () {
-          Application.router.navigateTo(context, "");
+          Application.push(context, "");
         },
       ),
     );

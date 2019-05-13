@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:xn_flutter_app/views/home_page/banner_entity.dart';
@@ -34,8 +35,7 @@ class _HomeBannerState extends State<HomeBanner> {
         },
         onTap: (int index) {
           print("点击了第$index个banner");
-          Application.router.navigateTo(context, handle(_list[index].href));
-      
+          Application.push(context, _list[index].href);
         },
         itemBuilder: (BuildContext context, int index) {
           return Image.network(

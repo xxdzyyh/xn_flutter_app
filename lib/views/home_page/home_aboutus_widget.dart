@@ -81,7 +81,7 @@ class _HomeAboutUsItemWidgetState extends State<HomeAboutUsItemWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Application.router.navigateTo(context, handle(widget.aboutUsEntity.url));
+        Application.push(context, widget.aboutUsEntity.url);
       },
       child: Container(
       height: XNScale.height(116),

@@ -97,7 +97,7 @@ class _HomeProductItemWidgetState extends State<HomeProductItemWidget> {
               XNScale.width(15), XNScale.height(8)),
           child: GestureDetector(
             onTap: () {
-              Application.router.navigateTo(context, handle(widget.categoryEntity.url));
+              Application.push(context, widget.categoryEntity.url);
             },
             child: DecoratedBox(
             decoration: BoxDecoration(
@@ -242,7 +242,7 @@ class _HomeProductItemMoreWidgetState extends State<HomeProductItemMoreWidget> {
                 XNScale.width(5), XNScale.height(8)),
             child: GestureDetector(
               onTap: () {
-                Application.router.navigateTo(context, handle(widget.categoryEntity.url));
+                Application.push(context, widget.categoryEntity.url);
               },
               child: DecoratedBox(
               decoration: BoxDecoration(

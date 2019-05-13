@@ -11,6 +11,5 @@ class Routes {
     router.define(webViewStr, handler: webViewPageHand);
     router.define(notDefineStr, handler: notDefinePageHand);
   }
-
-
+  
 }

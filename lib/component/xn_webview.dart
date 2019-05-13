@@ -40,7 +40,7 @@ class _XNWebViewState extends State<XNWebView> {
             navigationDelegate: (NavigationRequest request) {
               if(request.url.startsWith("xnoapp://xno.cn/")) {
                 print("即将打开 ${request.url}");
-                Application.router.navigateTo(context, handle(request.url));
+                Application.push(context, request.url);
                 return NavigationDecision.prevent;
               }
               return NavigationDecision.navigate;

@@ -64,7 +64,7 @@ class _HomeNewsItemWidgetState extends State<HomeNewsItemWidget> {
           XNScale.width(7.5), XNScale.height(13)),
       child: GestureDetector(
         onTap: () {
-          Application.router.navigateTo(context, handle(widget.newsBannerEntity.url));
+          Application.push(context, widget.newsBannerEntity.url);
         },
         child: DecoratedBox(
         decoration: BoxDecoration(color: Colors.white, boxShadow: [
