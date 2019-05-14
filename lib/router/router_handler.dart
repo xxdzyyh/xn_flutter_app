@@ -3,7 +3,8 @@ import 'package:fluro/fluro.dart';
 import '../component/empty_view.dart';
 import '../component/xn_webview.dart';
 import '../component/notdefine_view.dart';
- 
+import '../views/my_page/xn_activity_page.dart';
+
 var widgetNotFoundHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   return EmptyPage();
@@ -22,3 +23,8 @@ var webViewPageHand = new Handler(
   String url = params['url']?.first;
   return XNWebView(title: title, url: url);
 });
+
+var widgetActivityHandler = new Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return XNActivityPage();
+    });

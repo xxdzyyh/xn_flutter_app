@@ -3,25 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:xn_flutter_app/uibuild/xncolor.dart';
 import 'package:xn_flutter_app/uibuild/xnscale.dart';
 import 'package:xn_flutter_app/views/my_page/account_vm.dart';
-
-
-/*图片放在根目录下的images文件夹里*/
-imageNamed(String imageName,{double height, double width}) {
-  return Image.asset("assets/images/$imageName.png",height: height,width: width,);
-}
-
-divider() {
-
-  return Container(
-    height: 0.0,
-    margin: EdgeInsetsDirectional.only(start: 0),
-    decoration: BoxDecoration(
-      border: Border(
-        bottom: BorderSide(color: xn_split_color),
-      ),
-    ),
-  );
-}
+import 'package:xn_flutter_app/views/my_page/xn_service_cell.dart';
+import 'package:xn_flutter_app/uibuild/xnutils.dart';
 
 class MyPage extends StatefulWidget {
   @override
@@ -32,45 +15,137 @@ class _MyPageState extends State<MyPage> {
 
   double topPadding;
   double bottomPadding;
+  double screenWidth = 0;
+
+  double _backImageX = 0;
+  double _backImageY = 0;
+  double _backImageHeight = 0;
+  double _backImageWidth = 0;
 
   var accountVM = XNAccoutVM();
+  var _scrollController = TrackingScrollController();
 
   @override
   Widget build(BuildContext context) {
-    topPadding = MediaQuery.of(context).padding.top;
-    bottomPadding = MediaQuery.of(context).padding.bottom;
+
+    if (screenWidth == 0) {
+      topPadding = MediaQuery.of(context).padding.top;
+      bottomPadding = MediaQuery.of(context).padding.bottom;
+      screenWidth = MediaQuery.of(context).size.width;
+      _backImageHeight = XNScale.height(115.0+topPadding+44.0);
+      _backImageWidth = screenWidth;
+    }
 
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text("我的"),
-      ),
+//      navigationBar: CupertinoNavigationBar(
+//        backgroundColor: Color(0x00000000),
+//        actionsForegroundColor: Color(0x00000000),
+//      ),
       child: Center(
-        child: _setupListView(),
+        child: _setupBody(),
       ),
       backgroundColor: Colors.white,
     );
   }
 
+  _setupBody() {
+
+    Image image = Image.asset(
+      "assets/images/account_head_back.png",
+      fit: BoxFit.fill,
+    );
+
+    print("width = $_backImageWidth");
+    print("height = $_backImageHeight");
+    print("y = $_backImageY");
+    print("x = $_backImageX");
+
+    var notify = NotificationListener(onNotification: dataNotification,child:_setupListView(),);
+
+    Stack stack = Stack(
+      children: <Widget>[
+        Positioned(child: image,top: _backImageY,left: _backImageX,width: _backImageWidth,height: _backImageHeight,),
+        notify
+    ],
+    overflow: Overflow.visible,
+    alignment: AlignmentDirectional.center,);
+
+    return stack;
+  }
+
+  bool dataNotification(ScrollNotification notification) {
+    if (notification is ScrollUpdateNotification) {
+
+      var y = _scrollController.offset;
+      var alpha = 0.0;
+
+      if (y > 100) {
+        alpha = 1;
+      } else if (y > 0) {
+        alpha = y / 100.0;
+      }
+
+      var height = XNScale.height(115.0+44+topPadding);
+
+      if (y < 0) {
+        _backImageY = 0;
+        _backImageHeight = height - y;
+        _backImageWidth = _backImageHeight/height*screenWidth;
+        setState(() {
+
+          _backImageX = -(_backImageWidth-screenWidth)/2.0;
+          print(_backImageHeight);
+        });
+
+      } else {
+
+        setState(() {
+          _backImageX = 0;
+          _backImageY = -y;
+          _backImageHeight = height;
+          _backImageWidth = screenWidth;
+        });
+
+      }
+
+    }
+    return true;
+  }
 
   Widget _setupListView() {
 
-    return ListView.builder(
-      itemCount: 1+this.accountVM.groupCellModels.length+this.accountVM.singleItems.length,
+    return ListView.builder
+      (
+      itemCount: 1+1+this.accountVM.groupCellModels.length+1+this.accountVM.singleItems.length + 1,
       itemBuilder: (context,i) {
         if (i == 0) {
           return _setupHeader();
-        } else if (i<this.accountVM.groupCellModels.length+1) {
+        } else if (i == 1) {
 
-          List list = this.accountVM.groupCellModels[i-1];
+          return Container(height: 10,color: Color(0xFFF4F4F4),);
+
+        } else if (i<this.accountVM.groupCellModels.length+2) {
+
+          List list = this.accountVM.groupCellModels[i-2];
 
           return _setupGroupCell(list);
+        } else if (i==1+1+this.accountVM.groupCellModels.length) {
+
+          return Container(height: 10,color: Color(0xFFF4F4F4),);
+
+        } else if (i==3+this.accountVM.groupCellModels.length+this.accountVM.singleItems.length) {
+          // 客服中心
+          return XNServiceCell();
         } else {
-          XNAccountSingleCellModel vm = this.accountVM.singleItems[i-1-this.accountVM.groupCellModels.length];
+          XNAccountSingleCellModel vm = this.accountVM.singleItems[i - 3 -
+            this.accountVM.groupCellModels.length];
 
           return _setupSingleCell(vm);
         }
-
-      });
+      },
+      controller: _scrollController,
+      physics: ScrollPhysics(),
+      );
   }
 
 
@@ -100,6 +175,9 @@ class _MyPageState extends State<MyPage> {
         child: Text("登录/注册", style: TextStyle(fontSize: 14)),
         onPressed: (){
           print("登录/注册");
+
+          Navigator.of(context).pushNamed("/xn_activity");
+
         },
         textColor: Colors.white,
         splashColor: xn_clear_color,
@@ -119,7 +197,7 @@ class _MyPageState extends State<MyPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
       ),
-      color: Colors.green,
+      color: Color.fromARGB(0, 0, 0, 0),
     );
   }
 
@@ -140,7 +218,7 @@ class _MyPageState extends State<MyPage> {
     left = Column(children: <Widget>[rightTitle,rightTips],crossAxisAlignment: CrossAxisAlignment.center,);
 
     var splitLine = Container(
-      width: 1.0,
+      width: 0.5,
       height: XNScale.height(64),
       color: xn_split_color,
     );
@@ -173,7 +251,7 @@ class _MyPageState extends State<MyPage> {
     );
 
     var splitLine = Container(
-      width: 1.0,
+      width: 0.5,
       height: XNScale.height(44),
       color: xn_split_color,
     );
@@ -190,7 +268,7 @@ class _MyPageState extends State<MyPage> {
     var backgroundView = Container(
       height: XNScale.height((122.0 + 64.0 + 44.0 + 44 + this.topPadding)),
       width: MediaQuery.of(this.context).size.width,
-      color: Colors.blue,);
+      color: Color.fromARGB(0, 0, 0, 0),);
 
 
     Stack stack = Stack(children: <Widget>[backgroundView,Column(children: <Widget>[_setupNotLoginView(),_setupBalanceView(),_setupOperationView()],)],
@@ -223,7 +301,7 @@ class _MyPageState extends State<MyPage> {
     left = Column(children: <Widget>[title,tips],crossAxisAlignment: CrossAxisAlignment.start,);
 
     var splitLine = Container(
-      width: 1.0,
+      width: 0.5,
       height: XNScale.height(50),
       color: xn_split_color,
     );
