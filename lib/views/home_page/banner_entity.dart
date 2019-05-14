@@ -17,7 +17,7 @@ abstract class BaseEntity {
 //会自动生成 ClassName.g.dart 文件 
 //factory ?
 
-
+//lutter packages pub run build_runner watch 运行watch 只生成必要的文件 
 
 @JsonSerializable()
 class HomePageEntity {
