@@ -21,6 +21,7 @@ class _MyPageState extends State<MyPage> {
   double _backImageY = 0;
   double _backImageHeight = 0;
   double _backImageWidth = 0;
+  double _backViewHeight = 0;
 
   var accountVM = XNAccoutVM();
   var _scrollController = TrackingScrollController();
@@ -34,17 +35,22 @@ class _MyPageState extends State<MyPage> {
       screenWidth = MediaQuery.of(context).size.width;
       _backImageHeight = XNScale.height(115.0+topPadding+44.0);
       _backImageWidth = screenWidth;
+      _backViewHeight = XNScale.height((122.0 + 64.0 + 44.0 + 44 + topPadding));
     }
 
+    var bar = CupertinoNavigationBar(
+      backgroundColor: Color.fromARGB(0, 0, 0, 0),
+      actionsForegroundColor: Color(0x00000000),
+      border: null,
+    );
+
+
     return CupertinoPageScaffold(
-//      navigationBar: CupertinoNavigationBar(
-//        backgroundColor: Color(0x00000000),
-//        actionsForegroundColor: Color(0x00000000),
-//      ),
+//      navigationBar: bar,
       child: Center(
         child: _setupBody(),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFF4F4F4),
     );
   }
 
@@ -55,15 +61,13 @@ class _MyPageState extends State<MyPage> {
       fit: BoxFit.fill,
     );
 
-    print("width = $_backImageWidth");
-    print("height = $_backImageHeight");
-    print("y = $_backImageY");
-    print("x = $_backImageX");
+    var containerView = Container(color: Colors.white);
 
     var notify = NotificationListener(onNotification: dataNotification,child:_setupListView(),);
 
     Stack stack = Stack(
       children: <Widget>[
+        Positioned(child: containerView,top: _backImageY,left: 0,width: screenWidth,height: _backViewHeight,),
         Positioned(child: image,top: _backImageY,left: _backImageX,width: _backImageWidth,height: _backImageHeight,),
         notify
     ],
@@ -86,15 +90,17 @@ class _MyPageState extends State<MyPage> {
       }
 
       var height = XNScale.height(115.0+44+topPadding);
+      var headerHeight = XNScale.height((122.0 + 64.0 + 44.0 + 44 + this.topPadding));
 
       if (y < 0) {
-        _backImageY = 0;
-        _backImageHeight = height - y;
-        _backImageWidth = _backImageHeight/height*screenWidth;
-        setState(() {
 
+        setState(() {
+          _backImageY = 0;
+          _backImageHeight = height - y;
+          _backImageWidth = _backImageHeight/height*screenWidth;
           _backImageX = -(_backImageWidth-screenWidth)/2.0;
-          print(_backImageHeight);
+          _backViewHeight = headerHeight - y;
+
         });
 
       } else {
@@ -104,6 +110,7 @@ class _MyPageState extends State<MyPage> {
           _backImageY = -y;
           _backImageHeight = height;
           _backImageWidth = screenWidth;
+          _backViewHeight = headerHeight;
         });
 
       }
@@ -145,6 +152,7 @@ class _MyPageState extends State<MyPage> {
       },
       controller: _scrollController,
       physics: ScrollPhysics(),
+      padding: EdgeInsets.only(top: 0,bottom: bottomPadding),
       );
   }
 
@@ -220,7 +228,7 @@ class _MyPageState extends State<MyPage> {
     var splitLine = Container(
       width: 0.5,
       height: XNScale.height(64),
-      color: xn_split_color,
+      color: Color(0),
     );
 
     Row row;
@@ -231,7 +239,11 @@ class _MyPageState extends State<MyPage> {
       row = Row(children: <Widget>[left],);
     }
 
-    return Column(children: <Widget>[row,divider()],);
+    return Container(
+      child:Column(children: <Widget>[row,divider()],),
+      height: XNScale.height(64),
+      color: Colors.white,
+    ) ;
   }
 
   _setupOperationView() {
@@ -256,10 +268,13 @@ class _MyPageState extends State<MyPage> {
       color: xn_split_color,
     );
 
-    return Container(height: XNScale.height(44),child: Row(children: <Widget>[Expanded(child: withDrawButton) ,splitLine,Expanded(child: rechargeButton)],
+    return Container(
+      height: XNScale.height(44),
+      child: Row(children: <Widget>[Expanded(child: withDrawButton) ,splitLine,Expanded(child: rechargeButton)],
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-      )
+      ),
+      color: Colors.white,
     );
   }
 
@@ -289,7 +304,7 @@ class _MyPageState extends State<MyPage> {
       var title = Padding(padding: EdgeInsets.only(left: 15),child:Text(model.title,style: TextStyle(fontSize: 14,color: Color(0xFF222222),fontWeight: FontWeight.bold)));
       var tips = Padding(padding: EdgeInsets.only(left: 15),child:Text(model.value,style: TextStyle(fontSize: 14,color: Color(0xFF5F5F5F))));
 
-      right = Column(children: <Widget>[title,tips],crossAxisAlignment: CrossAxisAlignment.start,);
+      right = Column(children: <Widget>[title,tips],crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.center,);
 
     }
 
@@ -298,11 +313,11 @@ class _MyPageState extends State<MyPage> {
     var title = Padding(padding: EdgeInsets.only(left: 15),child:Text(model.title,style: TextStyle(fontSize: 14,color: Color(0xFF222222),fontWeight: FontWeight.bold)));
     var tips = Padding(padding: EdgeInsets.only(left: 15),child:Text(model.value,style: TextStyle(fontSize: 14,color: Color(0xFF5F5F5F))));
 
-    left = Column(children: <Widget>[title,tips],crossAxisAlignment: CrossAxisAlignment.start,);
+    left = Column(children: <Widget>[title,tips],crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.center,);
 
     var splitLine = Container(
       width: 0.5,
-      height: XNScale.height(50),
+      height: XNScale.height(60),
       color: xn_split_color,
     );
 
@@ -314,17 +329,22 @@ class _MyPageState extends State<MyPage> {
        row = Row(children: <Widget>[left],);
     }
 
-    return Column(children: <Widget>[row,divider()],);
+    return Column(children: <Widget>[Container(height: XNScale.height(60),child: row,color: Colors.white,) ,divider()],);
   }
 
   // Single Cell
   Widget _setupSingleCell(XNAccountSingleCellModel model) {
 
     var title = Padding(padding: EdgeInsets.only(left: 15),child: Text(model.title,style: TextStyle(fontSize: 14,color: Color(0xFF222222)),),);
-    var tips = Expanded(child: Text(model.value,style: TextStyle(fontSize: 14,color: Color(0xFF9B9B9B)),textAlign: TextAlign.end,));
+    var tips  = Expanded(child: Text(model.value,style: TextStyle(fontSize: 14,color: Color(0xFF9B9B9B)),textAlign: TextAlign.end,));
     var arrow = Padding(padding: EdgeInsets.only(right: 15,left: 5),child: imageNamed("right_more",width: 10,height: 14),);
 
-    Column column = Column(children: <Widget>[SizedBox(height: 50,child: Row(children: <Widget>[title,Spacer(),tips,arrow],),),
+    Column column = Column(children: <Widget>[
+      Container(
+        height: 50,
+        child: Row(children: <Widget>[title,Spacer(),tips,arrow],),
+        color: Colors.white,
+      ),
     divider()],);
 
     return column;
