@@ -161,26 +161,26 @@ class _MyPageState extends State<MyPage> {
 
   _setupNotLoginView() {
 
-    Widget welcomeLabel = Text("注册送518元红包",style: TextStyle(fontSize: 14),);
+    Widget welcomeLabel = Text("注册送518元红包",style: TextStyle(fontSize: XNScale.fontSize(14)),);
 
     welcomeLabel = Text.rich(
         TextSpan(text: "注册送",
-          style: TextStyle(fontSize: 14,color:Colors.white),
+          style: TextStyle(fontSize: XNScale.fontSize(14),color:Colors.white),
           children: <TextSpan>[
-            TextSpan(text: '518',style: TextStyle(fontSize: 32,color: xn_orange),),
-            TextSpan(text: "元",style: TextStyle(fontSize: 14,color:xn_orange)),
-            TextSpan(text: "红包",style: TextStyle(fontSize: 14,color:Colors.white))
+            TextSpan(text: '518',style: TextStyle(fontSize: XNScale.fontSize(32),color: xn_orange),),
+            TextSpan(text: "元",style: TextStyle(fontSize: XNScale.fontSize(14),color:xn_orange)),
+            TextSpan(text: "红包",style: TextStyle(fontSize: XNScale.fontSize(14),color:Colors.white))
       ]),
 
     );
 
-    Widget tipsLabel = Text("越投入越美好",style: TextStyle(fontSize: 12,color: Colors.white));
+    Widget tipsLabel = Text("越投入越美好",style: TextStyle(fontSize: XNScale.fontSize(12),color: Colors.white));
 
     Widget loginButton = SizedBox(
       height: XNScale.height(32),
       width: XNScale.width(110),
       child: OutlineButton(
-        child: Text("登录/注册", style: TextStyle(fontSize: 14)),
+        child: Text("登录/注册", style: TextStyle(fontSize: XNScale.fontSize(14))),
         onPressed: (){
           print("登录/注册");
 
@@ -214,14 +214,14 @@ class _MyPageState extends State<MyPage> {
     Column left;
     Column right;
 
-    var leftTitle = Padding(padding: EdgeInsets.only(left: 15),child:Text("网贷余额(元)",style: TextStyle(fontSize: 14,color: Color(0xFF222222),fontWeight: FontWeight.bold)));
-    var leftTips = Padding(padding: EdgeInsets.only(left: 15),child:Text("--",style: TextStyle(fontSize: 14,color: Color(0xFF5F5F5F))));
+    var leftTitle = Padding(padding: EdgeInsets.only(left: 15),child:Text("网贷余额(元)",style: TextStyle(fontSize: XNScale.fontSize(14),color: Color(0xFF222222),fontWeight: FontWeight.bold)));
+    var leftTips = Padding(padding: EdgeInsets.only(left: 15),child:Text("--",style: TextStyle(fontSize: XNScale.fontSize(14),color: Color(0xFF5F5F5F))));
 
     right = Column(children: <Widget>[leftTitle,leftTips],crossAxisAlignment: CrossAxisAlignment.center,);
 
 
-    var rightTitle = Padding(padding: EdgeInsets.only(left: 15),child:Text("智盈余额(元)",style: TextStyle(fontSize: 14,color: Color(0xFF222222),fontWeight: FontWeight.bold)));
-    var rightTips = Padding(padding: EdgeInsets.only(left: 15),child:Text("--",style: TextStyle(fontSize: 14,color: Color(0xFF5F5F5F))));
+    var rightTitle = Padding(padding: EdgeInsets.only(left: 15),child:Text("智盈余额(元)",style: TextStyle(fontSize: XNScale.fontSize(14),color: Color(0xFF222222),fontWeight: FontWeight.bold)));
+    var rightTips = Padding(padding: EdgeInsets.only(left: 15),child:Text("--",style: TextStyle(fontSize: XNScale.fontSize(14),color: Color(0xFF5F5F5F))));
 
     left = Column(children: <Widget>[rightTitle,rightTips],crossAxisAlignment: CrossAxisAlignment.center,);
 
@@ -249,14 +249,14 @@ class _MyPageState extends State<MyPage> {
   _setupOperationView() {
     
     var withDrawButton = CupertinoButton(
-      child: Text("提现",style: TextStyle(color: xn_orange,fontSize: 14),), 
+      child: Text("提现",style: TextStyle(color: xn_orange,fontSize: XNScale.fontSize(14)),), 
       onPressed: null,
       minSize: 30,
       padding: EdgeInsets.all(0),
     );
     
     var rechargeButton = CupertinoButton(
-      child: Text("充值",style: TextStyle(color: xn_orange,fontSize: 14),),
+      child: Text("充值",style: TextStyle(color: xn_orange,fontSize: XNScale.fontSize(14)),),
       onPressed: null,
       minSize: 30,
       padding: EdgeInsets.all(0),
@@ -301,8 +301,8 @@ class _MyPageState extends State<MyPage> {
 
       XNAccountSingleCellModel model = list[1];
 
-      var title = Padding(padding: EdgeInsets.only(left: 15),child:Text(model.title,style: TextStyle(fontSize: 14,color: Color(0xFF222222),fontWeight: FontWeight.bold)));
-      var tips = Padding(padding: EdgeInsets.only(left: 15),child:Text(model.value,style: TextStyle(fontSize: 14,color: Color(0xFF5F5F5F))));
+      var title = Padding(padding: EdgeInsets.only(left: 15),child:Text(model.title,style: TextStyle(fontSize: XNScale.fontSize(14),color: Color(0xFF222222),fontWeight: FontWeight.bold)));
+      var tips = Padding(padding: EdgeInsets.only(left: 15),child:Text(model.value,style: TextStyle(fontSize: XNScale.fontSize(14),color: Color(0xFF5F5F5F))));
 
       right = Column(children: <Widget>[title,tips],crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.center,);
 
@@ -310,8 +310,8 @@ class _MyPageState extends State<MyPage> {
 
     XNAccountSingleCellModel model = list[0];
 
-    var title = Padding(padding: EdgeInsets.only(left: 15),child:Text(model.title,style: TextStyle(fontSize: 14,color: Color(0xFF222222),fontWeight: FontWeight.bold)));
-    var tips = Padding(padding: EdgeInsets.only(left: 15),child:Text(model.value,style: TextStyle(fontSize: 14,color: Color(0xFF5F5F5F))));
+    var title = Padding(padding: EdgeInsets.only(left: 15),child:Text(model.title,style: TextStyle(fontSize: XNScale.fontSize(14),color: Color(0xFF222222),fontWeight: FontWeight.bold)));
+    var tips = Padding(padding: EdgeInsets.only(left: 15),child:Text(model.value,style: TextStyle(fontSize: XNScale.fontSize(14),color: Color(0xFF5F5F5F))));
 
     left = Column(children: <Widget>[title,tips],crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.center,);
 
@@ -335,8 +335,8 @@ class _MyPageState extends State<MyPage> {
   // Single Cell
   Widget _setupSingleCell(XNAccountSingleCellModel model) {
 
-    var title = Padding(padding: EdgeInsets.only(left: 15),child: Text(model.title,style: TextStyle(fontSize: 14,color: Color(0xFF222222)),),);
-    var tips  = Expanded(child: Text(model.value,style: TextStyle(fontSize: 14,color: Color(0xFF9B9B9B)),textAlign: TextAlign.end,));
+    var title = Padding(padding: EdgeInsets.only(left: 15),child: Text(model.title,style: TextStyle(fontSize: XNScale.fontSize(14),color: Color(0xFF222222)),),);
+    var tips  = Expanded(child: Text(model.value,style: TextStyle(fontSize: XNScale.fontSize(14),color: Color(0xFF9B9B9B)),textAlign: TextAlign.end,));
     var arrow = Padding(padding: EdgeInsets.only(right: 15,left: 5),child: imageNamed("right_more",width: 10,height: 14),);
 
     Column column = Column(children: <Widget>[
